@@ -2,100 +2,125 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function ReservationForm() {
-  const history = useHistory();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    mobileNumber: "",
-    reservationDateTime: "",
-    partySize: "",
+    first_name: "",
+    last_name: "",
+    mobile_number: "",
+    reservation_date: "",
+    reservation_time: "",
+    people: "",
   });
+  const [reservation, setReservation] = useState([]);
+  const history = useHistory();
+  const [error, setError] = useState("");
+
+  // CANCEL BUTTON
+  function cancelHandler() {
+    history.goBack();
+  }
 
   function handleInputChange(event) {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   }
 
-  function handleSubmit(event) {
+  // SUBMIT BUTTON
+  function submitHandler(event) {
     event.preventDefault();
-    const { reservationDate } = formData;
-    history.push(`/dashboard?date=${reservationDate}`);
-  }
-
-  function handleCancel() {
-    history.push("/");
+    const { reservation_date } = formData;
+    console.log("before");
+    console.log(formData);
+    if (reservation_date) {
+      console.log("after");
+      // save to db
+      history.push(`/dashboard?date=${reservation_date}`);
+    } else {
+      setError("Error submitting reservation:", error);
+    }
   }
 
   return (
     <div>
       <h2>New Reservation</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submitHandler}>
         <fieldset>
           <div>
-            <label htmlFor="form-first-name">First Name</label>
+            <label htmlFor="first_name">First Name:</label> <br />
             <input
               onChange={handleInputChange}
-              id="form-first-name"
+              id="first_name"
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name"
+              value={formData.first_name}
               placeholder="First Name"
               required
             />
           </div>
           <div>
-            <label htmlFor="form-last-name">Last Name</label>
+            <label htmlFor="last_name">Last Name:</label> <br />
             <input
               onChange={handleInputChange}
-              id="form-last-name"
+              id="last_name"
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name"
+              value={formData.last_name}
               placeholder="Last Name"
               required
             />
           </div>
           <div>
-            <label htmlFor="form-mobile-number">Mobile Number</label>
+            <label htmlFor="mobile_number">Mobile Number:</label> <br />
             <input
               onChange={handleInputChange}
-              id="form-mobile-number"
+              id="mobile_number"
               type="text"
-              name="mobileNumber"
-              value={formData.mobileNumber}
+              name="mobile_number"
+              value={formData.mobile_number}
               placeholder="Mobile Number"
               required
             />
           </div>
           <div>
-            <label htmlFor="form-date-time">Date and Time of Reservation</label>
+            <label htmlFor="reservation_date">Date of Reservation:</label>{" "}
+            <br />
             <input
               onChange={handleInputChange}
-              id="form-date-time"
-              type="datetime-local"
-              name="reservationDateTime"
-              value={formData.reservationDateTime}
-              placeholder="Date and Time of Reservation"
+              id="reservation_date"
+              type="date"
+              name="reservation_date"
+              value={formData.reservation_date}
               required
             />
           </div>
           <div>
-            <label htmlFor="form-party-size">Party Size</label>
+            <label htmlFor="reservation_time">Time of Reservation:</label>{" "}
+            <br />
             <input
               onChange={handleInputChange}
-              id="form-party-size"
+              id="reservation_time"
+              type="time"
+              name="reservation_time"
+              value={formData.reservation_time}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="people">Party Size:</label> <br />
+            <input
+              onChange={handleInputChange}
+              id="people"
               type="number"
-              name="partySize"
-              value={formData.partySize}
+              name="people"
+              value={formData.people}
               placeholder="Party Size"
               min="1"
               required
             />
           </div>
           <div>
-            <button type="cancel" onClick={handleCancel}>
+            <button type="cancel" onClick={cancelHandler}>
               Cancel
             </button>
-            <button type="submit">Submit</button> FIX SUBMIT BUTTON!!!!!!!!!
+            <button type="submit">Submit</button>
           </div>
         </fieldset>
       </form>

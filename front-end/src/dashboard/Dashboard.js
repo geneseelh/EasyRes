@@ -15,10 +15,12 @@ function Dashboard({ date }) {
   useEffect(loadDashboard, [date]);
 
   function loadDashboard() {
+    console.log(date);
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
+      .then(()=> console.log(reservations))
       .catch(setReservationsError);
     return () => abortController.abort();
   }
