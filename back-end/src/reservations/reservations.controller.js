@@ -41,12 +41,6 @@ async function create(req, res, next) {
           error: "Missing mobile_number",
         });
       }
-      const { data = {} } = req.body;
-      if (isNaN(Date.parse(data["reservation_date"]))) {
-        return res.status(400).json({
-          error: "Missing or invalid reservation_date",
-        });
-      }
     }
     const data = await reservationsService.create(req.body.data);
     res.status(201).json({
