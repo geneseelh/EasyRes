@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { createReservations } from "../utils/api";
 
 function ReservationForm() {
   const [formData, setFormData] = useState({
@@ -8,9 +9,8 @@ function ReservationForm() {
     mobile_number: "",
     reservation_date: "",
     reservation_time: "",
-    people: "",
+    people: 0,
   });
-  const [reservation, setReservation] = useState([]);
   const history = useHistory();
   const [error, setError] = useState("");
 
@@ -32,7 +32,10 @@ function ReservationForm() {
     if (reservation_date) {
       console.log("after");
       // save to db
-      history.push(`/dashboard?date=${reservation_date}`);
+      createReservations(formData).then((createdReservation) => {
+        const resDate = createdReservation.reservation_date.match(/\d{4}-\d{2}-\d{2}/)[0];
+        history.push(`/dashboard?date=${resDate}`);
+      });
     } else {
       setError("Error submitting reservation:", error);
     }
