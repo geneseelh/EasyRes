@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, cancelReservation } from "../utils/api";
+import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-import { Link } from "react-router-dom";
-import { next, previous, today } from "../utils/date-time";
-import ReservationsList from "./ReservationList";
 
 /**
  * Defines the dashboard page.
@@ -18,21 +15,13 @@ function Dashboard({ date }) {
   useEffect(loadDashboard, [date]);
 
   function loadDashboard() {
-    // console.log(date);
+    console.log(date);
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
+      .then(()=> console.log(reservations))
       .catch(setReservationsError);
-    return () => abortController.abort();
-  }
-
-  function onCancel(reservation_id) {
-    const abortController = new AbortController();
-    cancelReservation(reservation_id, abortController.signal)
-      .then(loadDashboard)
-      .catch(setReservationsError);
-
     return () => abortController.abort();
   }
 
@@ -43,32 +32,7 @@ function Dashboard({ date }) {
         <h4 className="mb-0">Reservations for date</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      {/* {info} */}
-
-      <div className="btn-group" role="group" aria-label="navigation buttons">
-        <Link
-          className="btn btn-secondary mr-1"
-          to={`/dashboard?date=${previous(date)}`}
-        >
-          <span className="oi oi-chevron-left" />
-          &nbsp;Previous
-        </Link>
-        <Link
-          className="btn btn-secondary mr-1"
-          to={`/dashboard?date=${today()}`}
-        >
-          Today
-        </Link>
-        <Link
-          className="btn btn-secondary"
-          to={`/dashboard?date=${next(date)}`}
-        >
-          Next&nbsp;
-          <span className="oi oi-chevron-right" />
-        </Link>
-      </div>
-      {/* {JSON.stringify(reservations)} */}
-      <ReservationsList onCancel={onCancel} reservations={reservations} />
+      {JSON.stringify(reservations)}
     </main>
   );
 }

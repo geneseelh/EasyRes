@@ -5,7 +5,6 @@ import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import ReservationForm from "../reservations/ReservationForm";
-import useQuery from "../utils/useQuery";
 
 /**
  * Defines all the routes for the application.
@@ -15,7 +14,6 @@ import useQuery from "../utils/useQuery";
  * @returns {JSX.Element}
  */
 function Routes() {
-  const query = useQuery()
   return (
     <Switch>
       <Route exact={true} path="/">
@@ -23,11 +21,14 @@ function Routes() {
         {/* home path -- dashboard */}
         <Redirect to={"/dashboard"} />
       </Route>
+      <Route exact={true} path="/reservations">
+        <Redirect to={"/dashboard"} />
+      </Route>
       <Route path="/reservations/new">
         <ReservationForm />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={query.get("date") || today()} />
+        <Dashboard date={today()} />
       </Route>
       <Route>
         <NotFound />
