@@ -20,7 +20,7 @@ function create(reservation) {
 }
 
 module.exports = {
-  create,
-  listReservationsByDate,
   list,
+  listReservationsByDate,
+  create,
 };

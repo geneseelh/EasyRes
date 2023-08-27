@@ -105,9 +105,9 @@ async function create(req, res, next) {
         error: "Missing or invalid people",
       });
     }
-    const data = await reservationsService.create(req.body.data);
+    const response = await reservationsService.create(req.body.data);
     return res.status(201).json({
-      data: data,
+      data: response,
     });
   } catch (error) {
     next(error);
