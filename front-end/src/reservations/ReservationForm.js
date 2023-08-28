@@ -9,14 +9,15 @@ const API_BASE_URL =
 
 function ReservationForm() {
   const history = useHistory();
-  const [formData, setFormData] = useState({
+  const initialState = {
     first_name: "",
     last_name: "",
     mobile_number: "",
     reservation_date: "",
     reservation_time: "",
     people: "",
-  });
+  };
+  const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState(null);
 
   // CHANGE HANDLER
@@ -40,11 +41,15 @@ function ReservationForm() {
     } // } else {
     const abortController = new AbortController();
     formData.people = Number(formData.people);
+    setError(null);
     // try {
     createRes(formData)
       .then(() => {
         history.push(`/dashboard?date=${formData.reservation_date}`);
       })
+      // .then(() => {
+      //   setFormData(initialState);
+      // })
       .catch(setError);
     // axios.post(`${API_BASE_URL}/reservations`, {
     //   data: formData,
