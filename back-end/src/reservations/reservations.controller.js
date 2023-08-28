@@ -21,6 +21,35 @@ function validator(field) {
   };
 }
 
+// us-02
+function hasFutureWorkingDate(req, res, next) {
+  const { reservation_date, reservation_time } = req.body.data;
+  const reservationDate = new Date(
+    `${reservation_date}T${reservation_time}:00Z`
+  )
+  res.locals.time = reservationDate;
+  const today = new Date();
+
+  if(isNaN(reservationDate.getDate())){
+    next({
+      message:"reservation_date / reservation_time incorrect.",
+      status: 400,
+    })
+  }  
+  if(reservationDate.getUTCDay() === 2){
+    next({
+      message:"Reservation is closed on Tuesdays.",
+      status: 400,
+    })
+  }  
+  if(reservationDate < today){
+    next({
+      message:"Reservation must be in the future.",
+      status: 400,
+    })
+  }
+}
+
 function phoneNumberValidator(field) {
   return function (req, _res, next) {
     const { data: { [field]: value } = {} } = req.body;
@@ -113,6 +142,7 @@ module.exports = {
     dateValidator("reservation_date"),
     timeValidator("reservation_time"),
     peopleValidator("people"),
+    hasFutureWorkingDate,
     asyncErrorBoundary(create),
   ],
 };
