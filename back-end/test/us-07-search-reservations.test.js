@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+// my-broken-node-only-test.js
+
 const request = require("supertest");
 
 const app = require("../src/app");
