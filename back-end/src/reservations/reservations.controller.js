@@ -4,8 +4,7 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 /**
  * List handler for reservation resources
  */
-async function list(req, res, next) {
-  console.log("LIST");
+async function list(req, res) {
   const { date } = req.query;
   if (date) {
     return res.json({
@@ -17,18 +16,8 @@ async function list(req, res, next) {
     return res.json({ data: await reservationsService.search(mobile_number) });
   }
   data = await reservationsService.list();
-  console.log("list data", data);
+  // console.log("list data", data);
   return res.json({ data });
-  // try {
-  //   const reservations = await reservationsService.listReservationsByDate(
-  //     req.query.date
-  //   );
-  //   res.json({
-  //     data: reservations,
-  //   });
-  // } catch (error) {
-  //   next(error);
-  // }
 }
 
 function isDate(dateToCheck) {

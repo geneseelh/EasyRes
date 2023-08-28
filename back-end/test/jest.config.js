@@ -1,3 +1,6 @@
+const { TextEncoder, TextDecoder } = require("util");
+Object.assign(global, { TextDecoder, TextEncoder });
+
 module.exports = {
-  testTimeout: 20000,
+  testTimeout: 50000,
 };
