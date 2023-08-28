@@ -6,7 +6,7 @@ const service = require("./reservations.service");
 
 function validator(field) {
   return function (req, _res, next) {
-    //to do: add validation for date and time
+    //add validation for date and time
     // add validation for mobile number
     // add validation for number of people
     const { data: { [field]: value } = {} } = req.body;
