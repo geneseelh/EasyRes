@@ -1,26 +1,20 @@
 const knex = require("../db/connection");
 
-function list() {
-  return knex("reservations").select("*").orderBy("reservation_time");
-}
-
-function listReservationsByDate(reservation_date) {
+function list(date) {
   return knex("reservations")
     .select("*")
-    .where({ reservation_date })
-    .whereNotIn("status", ["finished", "cancelled"])
+    .where({ reservation_date: date })
     .orderBy("reservation_time");
 }
 
-function create(reservation) {
-  return knex("reservations")
+async function create(reservation) {
+  const createdRecords = await knex("reservations")
     .insert(reservation)
-    .returning("*")
-    .then((createdReservations) => createdReservations[0]);
+    .returning("*");
+  return createdRecords[0];
 }
 
 module.exports = {
   list,
-  listReservationsByDate,
   create,
 };
