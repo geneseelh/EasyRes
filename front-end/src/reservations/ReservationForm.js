@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { createRes } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 function ReservationForm() {
+  const history = useHistory();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -15,135 +17,124 @@ function ReservationForm() {
     reservation_time: "",
     people: "",
   });
-  const history = useHistory();
   const [error, setError] = useState(null);
 
   // CHANGE HANDLER
-  function handleInputChange({ target }) {
-    setFormData({ ...formData, [target.name]: target.value });
+  function handleChange({ target }) {
+    setFormData({
+      ...formData,
+      [target.name]: target.value,
+    });
   }
 
   // CANCEL BUTTON HANDLER
-  function cancelHandler() {
+  const handleCancel = () => {
     history.goBack();
-  }
+  };
 
   // SUBMIT BUTTON HANDLER
-  function submitHandler(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     if (formData.people < 1) {
       alert("Please enter at least 1 person.");
-    } else {
-      const abortController = new AbortController();
-      try {
-        axios.post(`${API_BASE_URL}/reservations`, {
-          data: formData,
-        });
+    } // } else {
+    const abortController = new AbortController();
+    formData.people = Number(formData.people);
+    // try {
+    createRes(formData)
+      .then(() => {
         history.push(`/dashboard?date=${formData.reservation_date}`);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setError(error);
-        }
-      }
-      return () => abortController.abort();
-    }
+      })
+      .catch(setError);
+    // axios.post(`${API_BASE_URL}/reservations`, {
+    //   data: formData,
+    // });
+    // history.push(`/dashboard?date=${formData.reservation_date}`);
+    // } catch (error) {
+    //   if (error.name !== "AbortError") {
+    //     setError(error);
+    //   }
+    // }
+    return () => abortController.abort();
+    // }
   }
 
   return (
     <div>
-      <h2>New Reservation</h2>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="first_name">First Name:</label>
+          <label htmlFor="first_name">First Name</label>
           <input
-            onChange={handleInputChange}
+            className="form-control"
             id="first_name"
-            type="text"
             name="first_name"
-            className="form-control"
-            value={formData.first_name}
-            placeholder="First Name"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="last_name">Last Name:</label>
-          <input
-            onChange={handleInputChange}
-            id="last_name"
             type="text"
+            onChange={handleChange}
+            value={formData.first_name}
+            required
+          />
+          <label htmlFor="last_name">Last Name</label>
+          <input
+            className="form-control"
+            id="last_name"
             name="last_name"
-            className="form-control"
+            type="text"
+            onChange={handleChange}
             value={formData.last_name}
-            placeholder="Last Name"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="mobile_number">Mobile Number:</label>
+          <label htmlFor="mobile_number">Mobile Number</label>
           <input
-            onChange={handleInputChange}
+            className="form-control"
             id="mobile_number"
-            type="tel"
             name="mobile_number"
-            className="form-control"
+            type="tel"
+            onChange={handleChange}
             value={formData.mobile_number}
-            placeholder="Mobile Number"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="reservation_date">Date of Reservation:</label>
+          <label htmlFor="reservation_date">Reservation Date</label>
           <input
-            onChange={handleInputChange}
-            id="reservation_date"
-            type="date"
-            name="reservation_date"
             className="form-control"
+            id="reservation_date"
+            name="reservation_date"
+            type="date"
+            onChange={handleChange}
             value={formData.reservation_date}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="reservation_time" className="form-label">
-            Time of Reservation:
-          </label>
+          <label htmlFor="reservation_time">Reservation Time</label>
           <input
-            onChange={handleInputChange}
-            id="reservation_time"
-            type="time"
-            name="reservation_time"
             className="form-control"
+            id="reservation_time"
+            name="reservation_time"
+            type="time"
+            onChange={handleChange}
             value={formData.reservation_time}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="people" className="form-label">
-            Party Size:
-          </label>
+          <label htmlFor="people">Number of People</label>
+          {/* to do: add form level validator to the number of people field to ensure at least 1 person is entered  */}
           <input
-            onChange={handleInputChange}
-            id="people"
-            type="number"
-            name="people"
             className="form-control"
+            id="people"
+            name="people"
+            type="number"
+            onChange={handleChange}
             value={formData.people}
-            placeholder="Party Size"
-            min="1"
             required
           />
         </div>
         <div className="btn-group">
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={cancelHandler}
+            onClick={handleCancel}
           >
             Cancel
-          </button>
-          <button type="submit" className="btn btn-primary">
-            Submit
           </button>
         </div>
       </form>
