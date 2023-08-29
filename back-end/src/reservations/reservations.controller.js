@@ -109,15 +109,19 @@ function peopleValidator(field) {
 async function list(req, res) {
   const { date } = req.query;
   const data = await service.list(date);
-  res.json({
-    data,
-  });
+  res.json({ data });
 }
 async function create(req, res) {
   const response = await service.create(req.body.data);
   res.status(201).json({
     data: response,
   });
+}
+
+async function read(req, res){
+  const {reservation_id} = req.params;
+  const data = await service.read(reservation_id);
+  res.json({data});
 }
 
 module.exports = {
@@ -137,4 +141,5 @@ module.exports = {
     peopleValidator("people"),
     asyncErrorBoundary(create),
   ],
+  read: [asyncErrorBoundary(read)],
 };

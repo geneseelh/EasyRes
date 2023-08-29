@@ -83,21 +83,21 @@ function ReservationForm() {
     }
     if (formData.people < 1) {
       newErrors.push("Please enter a number of people.");
-    } else {
       if (errorTuesday || errorPastDate || errorTime || formData.people < 1) {
         setError({ message: newErrors });
-        console.log({ error, newErrors });
+        // console.log({ error, newErrors });
         return;
+      } else {
+        const abortController = new AbortController();
+        formData.people = Number(formData.people);
+        setError(null);
+        createRes(formData)
+          .then(() => {
+            history.push(`/dashboard?date=${formData.reservation_date}`);
+          })
+          .catch(setError);
+        return () => abortController.abort();
       }
-      const abortController = new AbortController();
-      formData.people = Number(formData.people);
-      setError(null);
-      createRes(formData)
-        .then(() => {
-          history.push(`/dashboard?date=${formData.reservation_date}`);
-        })
-        .catch(setError);
-      return () => abortController.abort();
     }
   }
 
