@@ -39,6 +39,7 @@ function dateValidator(field) {
     const { data: { [field]: value } = {} } = req.body;
     const date = new Date(value);
     const today = new Date();
+    //us-02 date validation
     if (date.getUTCDay() === 2) {
       next({
         message: "Reservation is closed on Tuesdays.",
@@ -72,7 +73,7 @@ function timeValidator(field) {
         message: `${field} must be a valid time`,
       });
     }
-    //us-03 time validator
+    //us-03 time validation
     if (submittedTime < 1030 || submittedTime > 2130) {
       next({
         status: 400,
