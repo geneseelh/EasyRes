@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
@@ -26,7 +26,7 @@ function Dashboard({ date }) {
   const [tables, setTables] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const history = useHistory();
-  
+  const location = useLocation();
 
   useEffect(loadDashboard, [thisDate]);
 
@@ -53,6 +53,25 @@ function Dashboard({ date }) {
     }
     loadTables();
   }, []);
+
+  useEffect(() => {
+    if (location.state && location.state.shouldReload) {
+      async function loadTables() {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+        try {
+          const response = await axios.get(`${API_BASE_URL}/tables`, {
+            signal,
+          });
+          setTables(response.data.data);
+        } catch (error) {
+          console.log(error, "error loading tables");
+        }
+      }
+      loadTables();
+      location.state.shouldReload = false;
+    }
+  }, [location.state]);
 
   function handleNext() {
     // console.log("handleNext");
