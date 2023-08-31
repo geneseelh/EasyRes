@@ -96,6 +96,7 @@ function ReservationForm() {
     } else {
       const abortController = new AbortController();
       formData.people = Number(formData.people);
+      console.log("formData", formData.people);
       setError(null);
       createRes(formData)
         .then(() => {

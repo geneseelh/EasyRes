@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import DisplayReservations from "./DisplayReservation";
 import DisplayTable from "./DisplayTable";
+import { updateTable } from "../utils/api";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
@@ -51,25 +52,41 @@ function SeatReservation() {
     setTableId(target.value);
   }
 
-  function handleSubmit(table_id) {
-    console.log({ table_id });
-    async function updateTable(table_id) {
-      const abortController = new AbortController();
-      const signal = abortController.signal;
-      try {
-        const response = await axios.put(
-          `${API_BASE_URL}/tables/${table_id}/seat`,
-          { data: { reservation_id: reservation_id } },
-          { signal }
-        );
-        setTableId(response.data.data.table_id);
-        history.push(`/dashboard`);
-      } catch (error) {
-        console.log(error, "error updating table");
-      }
-    }
-    updateTable(table_id);
-  }
+  // function handleSubmit(table_id) {
+  //   console.log("handleSubmit table_id", { table_id });
+  //   async function updateTable(table_id) {
+  //     const abortController = new AbortController();
+  //     const signal = abortController.signal;
+  //     try {
+  //       const response = await axios.put(
+  //         `${API_BASE_URL}/tables/${table_id}/seat`,
+  //         { data: { data: { reservation_id: reservation_id } } },
+  //         { signal }
+  //       );
+  //       // const reservationUpdate = await axios.put(
+  //       //   `${API_BASE_URL}/reservations/${reservation_id}/status`,
+  //       //   { data: { status: "seated" } },
+  //       //   { signal }
+  //       // );
+  //       // console.log({ reservationUpdate });
+  //       // setTableId(response.data.data.table_id);
+  //       history.push(`/dashboard`);
+  //     } catch (error) {
+  //       console.log(error, "error updating table");
+  //     }
+  //   }
+  //   updateTable(table_id);
+  // }
+  
+  const handleSubmit = async (event) => {
+    // event.preventDefault();
+    // event.stopPropogation();
+    console.log("handleSubmit resId", reservation.reservation_id);
+    console.log("handleSubmit tableId", tableId);
+
+    await updateTable(reservation.reservation_id, tableId);
+    history.push("/dashboard");
+  };
 
   function handleCancel() {
     history.goBack();

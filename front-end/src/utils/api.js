@@ -71,10 +71,21 @@ export async function listReservations(params, signal) {
 export async function createRes(res, signal) {
   const url = `${API_BASE_URL}/reservations`;
   const options = {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ data: res }),
-      signal,
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: res }),
+    signal,
+  };
+  return await fetchJson(url, options);
+}
+
+export async function updateTable(reservation_id, table_id) {
+  console.log("updateTable");
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+  const options = {
+    method: "PUT",
+    body: JSON.stringify({ data: { reservation_id } }),
+    headers,
   };
   return await fetchJson(url, options);
 }
