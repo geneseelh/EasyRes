@@ -54,6 +54,7 @@ function Dashboard({ date }) {
     loadTables();
   }, []);
 
+  //this should only run when the location.state.shouldReload is true
   useEffect(() => {
     if (location.state && location.state.shouldReload) {
       async function loadTables() {

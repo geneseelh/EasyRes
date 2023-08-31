@@ -24,6 +24,10 @@ function ReservationForm() {
 
   // CHANGE HANDLER
   function handleChange({ target }) {
+    // let value = target.value;
+    // if (target.name === "reservations_people") {
+    //   value = Number(value);
+    // }
     const updatedFormData = {
       ...formData,
       [target.name]: target.value,
@@ -68,6 +72,7 @@ function ReservationForm() {
 
   // SUBMIT BUTTON HANDLER
   function handleSubmit(event) {
+    // debugger;
     event.preventDefault();
 
     const newErrors = [];
@@ -87,17 +92,17 @@ function ReservationForm() {
         setError({ message: newErrors });
         // console.log({ error, newErrors });
         return;
-      } else {
-        const abortController = new AbortController();
-        formData.people = Number(formData.people);
-        setError(null);
-        createRes(formData)
-          .then(() => {
-            history.push(`/dashboard?date=${formData.reservation_date}`);
-          })
-          .catch(setError);
-        return () => abortController.abort();
       }
+    } else {
+      const abortController = new AbortController();
+      formData.people = Number(formData.people);
+      setError(null);
+      createRes(formData)
+        .then(() => {
+          history.push(`/dashboard?date=${formData.reservation_date}`);
+        })
+        .catch(setError);
+      return () => abortController.abort();
     }
   }
 

@@ -7,9 +7,10 @@ const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 function DisplayTable({ table }) {
-  const { reservation_id } = useParams();
-  const history = useHistory();
+  const { reservation_id } = useParams(); 
   const location = useLocation();
+  const history = useHistory();
+ 
 
   function finishHandler(table_id) {
     async function updateTable(table_id) {
@@ -22,6 +23,7 @@ function DisplayTable({ table }) {
           { signal }
         );
 
+        // to force a reload of the dashboard
         history.push({
           pathname: `/dashboard`,
           state: { shouldReload: true },
