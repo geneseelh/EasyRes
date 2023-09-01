@@ -1,4 +1,5 @@
 #Restaurant Reservation System
+![dashboard](https://github.com/geneseelh/restaurant-reservation/assets/129642269/573beba9-c899-487a-863f-c9e9043bfc17)
 
 ## About
 
