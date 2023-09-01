@@ -1,8 +1,45 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 function DisplayReservations({ reservation }) {
   const { reservation_id } = useParams();
+  const history = useHistory();
+
+  function handleCancel(reservation_id) {
+    async function cancelReservation(reservation_id) {
+      const abortController = new AbortController();
+      const signal = abortController.signal;
+      try {
+        const response = await axios.put(
+          `${API_BASE_URL}/reservations/${reservation_id}/status`,
+          { data: { status: "cancelled" } },
+          { signal }
+        );
+        console.log({ response });
+        // this is a hack to force a reload of the dashboard
+        history.push({
+          pathname: `/dashboard`,
+          state: { shouldReload: true },
+        });
+      } catch (error) {
+        console.log(error, "error cancelling reservation");
+      }
+    }
+
+    if (
+      window.confirm(
+        "Do you want to cancel this reservation? This cannot be undone."
+      )
+    ) {
+      cancelReservation(reservation_id);
+    }
+  }
+
   return (
     <div>
       <div className="card">
@@ -30,6 +67,15 @@ function DisplayReservations({ reservation }) {
               <button className="btn btn-primary">Seat</button>
             </Link>
           )}
+          <a href={`/reservations/${reservation.reservation_id}/edit`}>
+            <button className="btn btn-primary">Edit</button>
+          </a>
+          <button
+            className="btn btn-danger"
+            onClick={() => handleCancel(reservation.reservation_id)}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
