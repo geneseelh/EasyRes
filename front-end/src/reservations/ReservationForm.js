@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 function ReservationForm({
   initialFormData,
@@ -9,9 +9,10 @@ function ReservationForm({
 }) {
   const [formData, setFormData] = useState({ ...initialFormData });
   const { reservation_id } = useParams();
+
   function handleChange({ target }) {
     if (changeHandler) {
-      console.log({ target });
+      // console.log({ target });
       changeHandler(target);
       setFormData({
         ...formData,

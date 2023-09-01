@@ -5,7 +5,6 @@ import {
 } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
-// import DisplayReservations from "../dashboard/DisplayReservation";
 import ReservationForm from "./ReservationForm";
 
 const API_BASE_URL =
@@ -101,7 +100,6 @@ function EditReservation() {
     <div>
       <h1>Edit Reservation</h1>
       <h2>Reservation ID: {reservation_id}</h2>
-      {/* <DisplayReservations reservation={reservation} /> */}
       {isLoaded ? (
         <ReservationForm
           initialFormData={initialFormData}

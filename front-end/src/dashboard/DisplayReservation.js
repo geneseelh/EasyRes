@@ -20,7 +20,7 @@ function DisplayReservations({ reservation }) {
           { data: { status: "cancelled" } },
           { signal }
         );
-        console.log({ response });
+        // console.log({ response });
         // this is a hack to force a reload of the dashboard
         history.push({
           pathname: `/dashboard`,

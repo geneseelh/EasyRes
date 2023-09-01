@@ -81,8 +81,8 @@ function SeatReservation() {
   const handleSubmit = async (event) => {
     // event.preventDefault();
     // event.stopPropogation();
-    console.log("handleSubmit resId", reservation.reservation_id);
-    console.log("handleSubmit tableId", tableId);
+    // console.log("handleSubmit resId", reservation.reservation_id);
+    // console.log("handleSubmit tableId", tableId);
 
     await updateTable(reservation.reservation_id, tableId);
     history.push("/dashboard");

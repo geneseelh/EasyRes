@@ -113,11 +113,11 @@ function timeValidator(field) {
 
 function peopleValidator(field) {
   return function (req, _res, next) {
-    console.log({ field });
+    // console.log({ field });
     const { data: { [field]: value } = {} } = req.body;
-    console.log({ value });
+    // console.log({ value });
     if (typeof value !== "number") {
-      console.log({ value });
+      // console.log({ value });
       return next({
         status: 400,
         message: `${field} must be a number`,
@@ -173,8 +173,6 @@ function updateStatusIsNotFinished(req, res, next) {
 }
 
 async function list(req, res) {
-  // const { date } = req.query;
-  // const data = await service.list(date);
   const { date, mobile_number } = req.query;
   let data;
   if (date) {
@@ -250,7 +248,7 @@ module.exports = {
     createStatusValidator("status"),
     asyncErrorBoundary(create),
   ],
-  read: [asyncErrorBoundary(read)],
+  read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
   update: [
     asyncErrorBoundary(reservationExists),
     updateStatusIsNotFinished,

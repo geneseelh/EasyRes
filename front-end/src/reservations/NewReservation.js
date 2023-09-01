@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { createRes } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
@@ -97,7 +97,7 @@ function NewReservation() {
     } else {
       const abortController = new AbortController();
       formData.people = Number(formData.people);
-      console.log("formData", formData.people);
+      // console.log("formData", formData.people);
       setError(null);
       createRes(formData)
         .then(() => {
@@ -120,97 +120,6 @@ function NewReservation() {
       <ErrorAlert error={error} />
     </div>
   );
-  //   <form onSubmit={handleSubmit}>
-  //   <div className="form-group">
-  //     <label htmlFor="first_name">First Name</label>
-  //     <input
-  //       className="form-control"
-  //       id="first_name"
-  //       name="first_name"
-  //       type="text"
-  //       onChange={handleChange}
-  //       value={formData.first_name}
-  //       required
-  //     />
-  //     <label htmlFor="last_name">Last Name</label>
-  //     <input
-  //       className="form-control"
-  //       id="last_name"
-  //       name="last_name"
-  //       type="text"
-  //       onChange={handleChange}
-  //       value={formData.last_name}
-  //       required
-  //     />
-  //     <label htmlFor="mobile_number">Mobile Number</label>
-  //     <input
-  //       className="form-control"
-  //       id="mobile_number"
-  //       name="mobile_number"
-  //       type="tel"
-  //       onChange={handleChange}
-  //       value={formData.mobile_number}
-  //       required
-  //     />
-  //     <label htmlFor="reservation_date">Reservation Date</label>
-  //     {/* {errorTuesday || errorPastDate || errorTime ? (
-  //       <div className="alert alert-danger">
-  //         {errorTuesday && (
-  //           <p>Closed on Tuesdays, please select a different day.</p>
-  //         )}
-  //         {errorPastDate && <p>Please select a future date.</p>}
-  //       </div>
-  //     ) : null} */}
-  //     <input
-  //       className="form-control"
-  //       id="reservation_date"
-  //       name="reservation_date"
-  //       type="date"
-  //       onChange={handleChange}
-  //       value={formData.reservation_date}
-  //       required
-  //     />
-  //     <label htmlFor="reservation_time">Reservation Time</label>
-  //     <input
-  //       className="form-control"
-  //       id="reservation_time"
-  //       name="reservation_time"
-  //       type="time"
-  //       onChange={handleChange}
-  //       value={formData.reservation_time}
-  //       required
-  //     />
-  //     <label htmlFor="people">Number of People</label>
-  //     {/* to do: add form level validator to the number of people field to ensure at least 1 person is entered  */}
-  //     <input
-  //       className="form-control"
-  //       id="people"
-  //       name="people"
-  //       type="number"
-  //       onChange={handleChange}
-  //       value={formData.people}
-  //       required
-  //     />
-  //   </div>
-  //   <div className="btn-group">
-  //     <button
-  //       type="submit"
-  //       className="btn btn-primary"
-  //       // disabled={
-  //       //   errorTuesday || errorPastDate || formData.people < 1 || errorTime
-  //       // }
-  //     >
-  //       Submit
-  //     </button>
-  //     <button
-  //       type="button"
-  //       className="btn btn-secondary"
-  //       onClick={handleCancel}
-  //     >
-  //       Cancel
-  //     </button>
-  //   </div>
-  // </form>
 }
 
 export default NewReservation;

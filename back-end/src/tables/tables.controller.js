@@ -41,7 +41,7 @@ function nameValidator(field) {
 }
 
 async function capacityValidator(req, res, next) {
-  console.log("capacityValidator");
+  // console.log("capacityValidator");
   if (!req.body.data) {
     return next({
       status: 400,
@@ -77,7 +77,7 @@ async function capacityValidator(req, res, next) {
 }
 
 async function isOccupied(req, res, next) {
-  console.log("isOccupied");
+  // console.log("isOccupied");
   const { table_id } = req.params;
   const { reservation_id } = req.body.data;
   const table = await service.read(table_id);
@@ -92,7 +92,7 @@ async function isOccupied(req, res, next) {
 }
 
 async function isNotOccupied(req, res, next) {
-  console.log("isNotOccupied");
+  // console.log("isNotOccupied");
   const { table_id } = req.params;
   const table = await service.read(table_id);
 
@@ -120,7 +120,7 @@ async function tableExists(req, res, next) {
 }
 
 async function reservationIsNotSeated(req, res, next) {
-  console.log("reservationIsNotSeated");
+  // console.log("reservationIsNotSeated");
   const { reservation_id } = req.body.data;
   const reservation = await reservationsService.read(reservation_id);
   if (reservation.status === "seated") {
@@ -143,18 +143,18 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-  console.log("!!!!!!!");
+  // console.log("!!!!!!!");
   // console.log("update");
   // console.log("res.locals", res.locals);
   const { table_id } = res.locals.table;
   const { reservation_id } = req.body.data;
-  console.log(req.body);
+  // console.log(req.body);
   const response = await service.update(table_id, reservation_id);
   const reservationResponse = await reservationsService.update(
     reservation_id,
     "seated"
   );
-  console.log("reservationRes", reservationResponse);
+  // console.log("reservationRes", reservationResponse);
   res.status(200).json({ data: response });
 }
 
