@@ -92,6 +92,10 @@ function Dashboard() {
     history.push(`/dashboard?date=${previousDate}`);
   }
 
+  function handleToday() {
+    history.push(`/dashboard?date=${today()}`);
+  }
+
   return (
     <main>
       <h1>Dashboard</h1>
@@ -102,8 +106,11 @@ function Dashboard() {
         <button className="btn btn-secondary mr-1" onClick={handlePrevious}>
           Previous
         </button>
-        <button className="btn btn-secondary" onClick={handleNext}>
+        <button className="btn btn-secondary mr-1" onClick={handleNext}>
           Next
+        </button>
+        <button className="btn btn-secondary mr-1" onClick={handleToday}>
+          Today
         </button>
       </div>
       <div className="d-md-flex mb-3">
