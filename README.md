@@ -2,16 +2,16 @@
 
 ## About
 
-The Restaurant Reservation System is a full-stack web application that allows restaurant managers to create, read, update, and delete reservations. It provides a streamlined interface for managing reservations and tables, and it is built with a responsive design to ensure a seamless user experience across all devices. The Restaurant Reservation System is a project from the Thinkful Software Engineering Immersion program.
+The Restaurant Reservation System is a full-stack web application that allows restaurant managers to create, read, update, and delete reservations. It provides a streamlined interface for managing reservations and tables, and it is built with a responsive design to ensure a seamless user experience across all devices.
 
 ## Features
 
-1. **Dynamic Reservations:** Easily create, modify, and list reservations to keep track of daily guest visits.
+1. **Dynamic Reservations:** Easily create, modify, and list reservations to keep track of reservations organized by day.
 2. **Intuitive Table Management:** Assign specific tables to reservations and monitor table availability in real-time.
-3. **Search Capability:** Retrieve reservations instantly using phone numbers.
+3. **Search Capability:** Retrieve reservations instantly using mobile numbers.
 4. **Reservation Status:** Visualize the status of reservations (booked, seated, finished) for efficient management.
 5. **Future Reservation Constraints:** Ensure reservations are made only on open days and during eligible hours.
-6. **User-friendly Interface:** Navigate and manage reservations with a sleek, responsive, and intuitive UI.
+6. **User-friendly Interface:** Navigate and manage reservations with efficient, responsive, and intuitive UI.
 
 ## Tech Stack
 
