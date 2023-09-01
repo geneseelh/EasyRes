@@ -34,6 +34,20 @@ function validator(field) {
   };
 }
 
+function isDate(field) {
+  return function (req, _res, next) {
+    const { data: { [field]: value } = {} } = req.body;
+    const date = new Date(value);
+    if (isNaN(date)) {
+      return next({
+        status: 400,
+        message: `${field} must be a valid date`,
+      });
+    }
+    next();
+  };
+}
+
 function phoneNumberValidator(field) {
   return function (req, _res, next) {
     const { data: { [field]: value } = {} } = req.body;
@@ -253,6 +267,9 @@ module.exports = {
       "reservation_time",
       "people",
     ].map(validator),
+    isDate("reservation_date"),
+    timeValidator("reservation_time"),
+    peopleValidator("people"),
     asyncErrorBoundary(updateReservation),
   ],
 };
