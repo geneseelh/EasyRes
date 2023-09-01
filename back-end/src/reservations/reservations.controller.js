@@ -259,14 +259,14 @@ module.exports = {
   ],
   updateReservation: [
     asyncErrorBoundary(reservationExists),
-    ...[
-      "first_name",
-      "last_name",
-      "mobile_number",
-      "reservation_date",
-      "reservation_time",
-      "people",
-    ].map(validator),
+    // ...[
+    //   "first_name",
+    //   "last_name",
+    //   "mobile_number",
+    //   "reservation_date",
+    //   "reservation_time",
+    //   "people",
+    // ].map(validator),
     isDate("reservation_date"),
     timeValidator("reservation_time"),
     peopleValidator("people"),
