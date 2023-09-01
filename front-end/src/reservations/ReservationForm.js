@@ -10,9 +10,10 @@ function ReservationForm({
   const [formData, setFormData] = useState({ ...initialFormData });
   const { reservation_id } = useParams();
 
+  // this changehandler will provide additional validation based on the parent component
+  // newreservation will during change and after submitting if inputs are not valid
   function handleChange({ target }) {
     if (changeHandler) {
-      // console.log({ target });
       changeHandler(target);
       setFormData({
         ...formData,

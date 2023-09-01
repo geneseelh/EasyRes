@@ -52,6 +52,7 @@ function Dashboard() {
         const response = await axios.get(`${API_BASE_URL}/tables`, { signal });
         setTables(response.data.data);
       } catch (error) {
+        setReservationsError(error.response.data.error);
         console.log(error, "error loading tables");
       }
     }
@@ -70,6 +71,7 @@ function Dashboard() {
           });
           setTables(response.data.data);
         } catch (error) {
+          setReservationsError(error.response.data.error);
           console.log(error, "error loading tables");
         }
       }

@@ -4,6 +4,7 @@ import axios from "axios";
 import DisplayReservations from "./DisplayReservation";
 import DisplayTable from "./DisplayTable";
 import { updateTable } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 require("dotenv").config();
 
 const API_BASE_URL =
@@ -14,6 +15,7 @@ function SeatReservation() {
   const [reservation, setReservation] = useState({});
   const [tableId, setTableId] = useState(0);
   const { reservation_id } = useParams();
+  const [error, setError] = useState(null); //error handling
   const history = useHistory();
 
   // loads tables on mount
@@ -25,6 +27,7 @@ function SeatReservation() {
         const response = await axios.get(`${API_BASE_URL}/tables`, { signal });
         setTables(response.data.data);
       } catch (error) {
+        setError(error.response.data.error);
         console.log(error, "error loading tables");
       }
     }
@@ -46,6 +49,7 @@ function SeatReservation() {
         );
         setReservation(response.data.data);
       } catch (error) {
+        setError(error.response.data.error);
         console.log(error, "error loading reservation");
       }
     }
@@ -104,6 +108,7 @@ function SeatReservation() {
           <DisplayTable key={table.table_id} table={table} />
         ))}
       </div>
+      <ErrorAlert error={error} />
     </div>
   );
 }

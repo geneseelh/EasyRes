@@ -3,9 +3,8 @@ import { useHistory } from "react-router-dom";
 import { createRes } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
+require("dotenv").config();
 
-// const API_BASE_URL =
-//   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 function NewReservation() {
   const history = useHistory();
@@ -23,12 +22,8 @@ function NewReservation() {
   const [errorPastDate, setErrorPastDate] = useState(false);
   const [errorTime, setErrorTime] = useState(false);
 
-  // CHANGE HANDLER
+  // change is updated from the child form component and additional validation is performed
   function handleChange(target) {
-    // let value = target.value;
-    // if (target.name === "reservations_people") {
-    //   value = Number(value);
-    // }
     const updatedFormData = {
       ...formData,
       [target.name]: target.value,
@@ -73,8 +68,6 @@ function NewReservation() {
 
   // SUBMIT BUTTON HANDLER
   function handleSubmit(event) {
-    // debugger;
-    // event.preventDefault();
 
     const newErrors = [];
 
@@ -91,13 +84,11 @@ function NewReservation() {
       newErrors.push("Please enter a number of people.");
       if (errorTuesday || errorPastDate || errorTime || formData.people < 1) {
         setError({ message: newErrors });
-        // console.log({ error, newErrors });
         return;
       }
     } else {
       const abortController = new AbortController();
       formData.people = Number(formData.people);
-      // console.log("formData", formData.people);
       setError(null);
       createRes(formData)
         .then(() => {

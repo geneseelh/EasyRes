@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
+require("dotenv").config();
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
@@ -32,14 +33,6 @@ function NewTable() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    // const abortController = new AbortController();
-    // formData.capacity = Number(formData.capacity);
-    // try {
-    //   axios.post(`${API_BASE_URL}/tables`, { data: formData });
-    //   history.push(`/dashboard`);
-    // } catch (error) {
-    //   if (error.name !== "AbortError") {
-    //     setError(error);
     const newErrors = [];
     if (errorCapacity) {
       newErrors.push({ message: "Capacity must be 1 or more." });

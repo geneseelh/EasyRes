@@ -6,6 +6,7 @@ import {
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
+require("dotenv").config();
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
@@ -25,6 +26,9 @@ function EditReservation() {
   });
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // loads reservation on mount and when the reservation_id changes
+  // should not be able to modify reservation and change reservation-id without going back to dashboard
+  // also checks if reservation is seated or finished
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -48,6 +52,7 @@ function EditReservation() {
         }
 
         setReservation(response.data.data);
+        // this reformats form data to match the format of the reservation form including clipping the extra time data from the reservation_time
         setInitialFormData({
           first_name: response.data.data.first_name,
           last_name: response.data.data.last_name,
@@ -61,6 +66,7 @@ function EditReservation() {
         });
         setIsLoaded(true);
       } catch (error) {
+        setReservationsError(error.response.data.error);
         console.log(error, "error loading reservation");
       }
     }
@@ -68,6 +74,7 @@ function EditReservation() {
     return () => abortController.abort();
   }, [reservation_id]);
 
+  // handles the submit of the edit reservation form
   function handleSubmitEdit(updatedReservation) {
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -75,7 +82,6 @@ function EditReservation() {
 
     updatedReservation.people = Number(updatedReservation.people);
 
-    // console.log(updatedReservation);
     async function editReservation(updatedReservation) {
       try {
         await axios.put(
@@ -85,6 +91,7 @@ function EditReservation() {
         );
         history.push(`/dashboard?date=${reservation.reservation_date}`);
       } catch (error) {
+        setReservationsError(error.response.data.error);
         console.log(error, "error editing reservation");
       }
     }

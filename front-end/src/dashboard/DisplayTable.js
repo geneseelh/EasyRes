@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import ErrorAlert from "../layout/ErrorAlert";
 import axios from "axios";
 require("dotenv").config();
 
@@ -7,9 +8,8 @@ const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 function DisplayTable({ table }) {
-  // const { reservation_id } = useParams();
-  // const location = useLocation();
   const history = useHistory();
+  const [error, setError] = React.useState(null);
 
   // callback function for each finish button on each table
   // takes in the table_id and reservation_id pulledd from the table object
@@ -29,6 +29,7 @@ function DisplayTable({ table }) {
           state: { shouldReload: true },
         });
       } catch (error) {
+        setError(error.response.data.error);
         console.log(error, "error updating table");
       }
     }
@@ -68,6 +69,7 @@ function DisplayTable({ table }) {
           ) : null}
         </div>
       </div>
+      <ErrorAlert error={error} />
     </div>
   );
 }

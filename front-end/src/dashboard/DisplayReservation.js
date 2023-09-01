@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
+import ErrorAlert from "../layout/ErrorAlert";
 require("dotenv").config();
 
 const API_BASE_URL =
@@ -11,7 +11,10 @@ const API_BASE_URL =
 function DisplayReservations({ reservation }) {
   const { reservation_id } = useParams();
   const history = useHistory();
+  const [error, setError] = React.useState(null);
 
+  // callback function for each cancel button on each reservation
+  // takes in the reservation_id pulled from the reservation object
   function handleCancel(reservation_id) {
     async function cancelReservation(reservation_id) {
       const abortController = new AbortController();
@@ -29,6 +32,7 @@ function DisplayReservations({ reservation }) {
           state: { shouldReload: true },
         });
       } catch (error) {
+        setError(error.response.data.error);
         console.log(error, "error cancelling reservation");
       }
     }
@@ -92,6 +96,7 @@ function DisplayReservations({ reservation }) {
           </button>
         </div>
       </div>
+      <ErrorAlert error={error} />
     </div>
   );
 }

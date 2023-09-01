@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import DisplayReservation from "../dashboard/DisplayReservation";
+import ErrorAlert from "../layout/ErrorAlert";
+require("dotenv").config();
+
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
-function Search({ search }) {
+function Search() {
   const [formData, setFormData] = useState({});
   const [reservations, setReservations] = useState([]);
   const [searched, setSearched] = useState(false);
+  const [error, setError] = useState(null);
+
   function handleChange({ target }) {
     setFormData({
       ...formData,
@@ -28,6 +33,7 @@ function Search({ search }) {
         setReservations(response.data.data);
         setSearched(!searched);
       } catch (error) {
+        setError(error.response.data.error);
         console.log(error, "error loading tables");
       }
     }
@@ -61,6 +67,7 @@ function Search({ search }) {
           : null}
         {searched && !reservations.length ? <p>No reservations found</p> : null}
       </div>
+      <ErrorAlert error={error} />
     </div>
   );
 }
