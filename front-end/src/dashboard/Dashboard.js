@@ -8,6 +8,7 @@ import useQuery from "../utils/useQuery";
 import DisplayReservations from "./DisplayReservation";
 import DisplayTable from "./DisplayTable";
 import axios from "axios";
+require("dotenv").config();
 
 /**
  * Defines the dashboard page.
@@ -19,7 +20,7 @@ import axios from "axios";
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
-function Dashboard({ date }) {
+function Dashboard() {
   const query = useQuery();
   const thisDate = query.get("date") || today();
   const [reservations, setReservations] = useState([]);
@@ -28,18 +29,21 @@ function Dashboard({ date }) {
   const history = useHistory();
   const location = useLocation();
 
+  // loads the reservations on mount and when the date changes
   useEffect(loadDashboard, [thisDate]);
 
+  //loads the reservations
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
+
     listReservations({ date: thisDate }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
     return () => abortController.abort();
   }
-  // console.log("reservations", reservations);
 
+  // loads the tables
   useEffect(() => {
     async function loadTables() {
       const abortController = new AbortController();
@@ -70,21 +74,21 @@ function Dashboard({ date }) {
         }
       }
       loadTables();
+      loadDashboard();
       location.state.shouldReload = false;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state]);
 
+  // handles moving to the next day
   function handleNext() {
-    // console.log("handleNext");
     const nextDate = next(thisDate);
-    // console.log({ nextDate });
     history.push(`/dashboard?date=${nextDate}`);
   }
 
+  // handles moving to the previous day
   function handlePrevious() {
-    // console.log("handlePrevious");
     const previousDate = previous(thisDate);
-    // console.log({ previousDate });
     history.push(`/dashboard?date=${previousDate}`);
   }
 
@@ -94,22 +98,28 @@ function Dashboard({ date }) {
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for {thisDate} </h4>
       </div>
-      <button className="btn btn-secondary" onClick={handlePrevious}>
-        Previous
-      </button>
-      <button className="btn btn-secondary" onClick={handleNext}>
-        Next
-      </button>
-      {reservations.map((reservation) => (
-        <DisplayReservations
-          key={reservation.reservation_id}
-          reservation={reservation}
-        />
-      ))}
+      <div className="d-md-flex mb-3">
+        <button className="btn btn-secondary mr-1" onClick={handlePrevious}>
+          Previous
+        </button>
+        <button className="btn btn-secondary" onClick={handleNext}>
+          Next
+        </button>
+      </div>
+      <div className="d-md-flex mb-3">
+        {reservations.map((reservation) => (
+          <DisplayReservations
+            key={reservation.reservation_id}
+            reservation={reservation}
+          />
+        ))}
+      </div>
       <br />
-      {tables.map((table) => (
-        <DisplayTable key={table.table_id} table={table} />
-      ))}
+      <div className="d-md-flex mb-3">
+        {tables.map((table) => (
+          <DisplayTable key={table.table_id} table={table} />
+        ))}
+      </div>
       <ErrorAlert error={reservationsError} />
       {/* {JSON.stringify(reservations)} */}
     </main>

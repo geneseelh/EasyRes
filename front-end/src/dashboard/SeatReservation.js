@@ -4,6 +4,7 @@ import axios from "axios";
 import DisplayReservations from "./DisplayReservation";
 import DisplayTable from "./DisplayTable";
 import { updateTable } from "../utils/api";
+require("dotenv").config();
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
@@ -15,6 +16,7 @@ function SeatReservation() {
   const { reservation_id } = useParams();
   const history = useHistory();
 
+  // loads tables on mount
   useEffect(() => {
     async function loadTables() {
       const abortController = new AbortController();
@@ -29,6 +31,8 @@ function SeatReservation() {
     loadTables();
   }, []);
 
+  // loads reservation on mount and when the reservation_id changes
+  // should not be able to modify reservation and change reservation-id without going back to dashboard
   useEffect(() => {
     async function loadReservation() {
       const abortController = new AbortController();
@@ -52,42 +56,13 @@ function SeatReservation() {
     setTableId(target.value);
   }
 
-  // function handleSubmit(table_id) {
-  //   console.log("handleSubmit table_id", { table_id });
-  //   async function updateTable(table_id) {
-  //     const abortController = new AbortController();
-  //     const signal = abortController.signal;
-  //     try {
-  //       const response = await axios.put(
-  //         `${API_BASE_URL}/tables/${table_id}/seat`,
-  //         { data: { data: { reservation_id: reservation_id } } },
-  //         { signal }
-  //       );
-  //       // const reservationUpdate = await axios.put(
-  //       //   `${API_BASE_URL}/reservations/${reservation_id}/status`,
-  //       //   { data: { status: "seated" } },
-  //       //   { signal }
-  //       // );
-  //       // console.log({ reservationUpdate });
-  //       // setTableId(response.data.data.table_id);
-  //       history.push(`/dashboard`);
-  //     } catch (error) {
-  //       console.log(error, "error updating table");
-  //     }
-  //   }
-  //   updateTable(table_id);
-  // }
-  
+  // will update the table with reservation ID and the reservation status to be seated
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // event.stopPropogation();
-    // console.log("handleSubmit resId", reservation.reservation_id);
-    // console.log("handleSubmit tableId", tableId);
-
     await updateTable(reservation.reservation_id, tableId);
     history.push("/dashboard");
   };
 
+  // cancel does not fore re-render of dashboard because no changes can be made to reservation and still be on this page
   function handleCancel() {
     history.goBack();
   }
@@ -96,7 +71,12 @@ function SeatReservation() {
     <div>
       <h1>Seat Reservation</h1>
       <DisplayReservations reservation={reservation} />
-      <select name="table_id" id="table_id" onChange={handleChange}>
+      <select
+        name="table_id"
+        id="table_id"
+        onChange={handleChange}
+        className="form-select"
+      >
         <option value="">Select a table</option>
         {tables.map((table) => (
           <option key={table.table_id} value={table.table_id}>
@@ -106,22 +86,24 @@ function SeatReservation() {
       </select>
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn btn-primary mr-1 ml-1 mt-1"
         onClick={() => handleSubmit(tableId)}
       >
         Submit
       </button>
       <button
         type="button"
-        className="btn btn-secondary"
+        className="btn btn-secondary mr-1 ml-1 mt-1"
         onClick={handleCancel}
       >
         Cancel
       </button>
       <h2>Tables</h2>
-      {tables.map((table) => (
-        <DisplayTable key={table.table_id} table={table} />
-      ))}
+      <div className="d-md-flex mb-3">
+        {tables.map((table) => (
+          <DisplayTable key={table.table_id} table={table} />
+        ))}
+      </div>
     </div>
   );
 }

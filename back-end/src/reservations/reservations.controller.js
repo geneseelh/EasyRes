@@ -19,9 +19,6 @@ async function reservationExists(req, res, next) {
 
 function validator(field) {
   return function (req, _res, next) {
-    //add validation for date and time
-    // add validation for mobile number
-    // add validation for number of people
     const { data: { [field]: value } = {} } = req.body;
     if (!value) {
       return next({
@@ -113,11 +110,8 @@ function timeValidator(field) {
 
 function peopleValidator(field) {
   return function (req, _res, next) {
-    // console.log({ field });
     const { data: { [field]: value } = {} } = req.body;
-    // console.log({ value });
     if (typeof value !== "number") {
-      // console.log({ value });
       return next({
         status: 400,
         message: `${field} must be a number`,
@@ -149,9 +143,7 @@ function createStatusValidator(field) {
 function updateStatusValidator(field) {
   return function (req, _res, next) {
     const { data: { [field]: value } = {} } = req.body;
-    // console.log("update status validator");
     if (value === "unknown") {
-      // console.log("unknown");
       return next({
         status: 400,
         message: `${field} cannot be ${value}`,

@@ -76,6 +76,7 @@ function NewTable() {
 
   return (
     <div>
+      <h1>New Table</h1>
       <form className="form-group" onSubmit={handleSubmit}>
         <label htmlFor="table_name">Table Name:</label>
         <input

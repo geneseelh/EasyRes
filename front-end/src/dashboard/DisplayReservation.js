@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
+require("dotenv").config();
+
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
@@ -15,12 +17,12 @@ function DisplayReservations({ reservation }) {
       const abortController = new AbortController();
       const signal = abortController.signal;
       try {
-        const response = await axios.put(
+        // originally assigned to a variable named response
+        await axios.put(
           `${API_BASE_URL}/reservations/${reservation_id}/status`,
           { data: { status: "cancelled" } },
           { signal }
         );
-        // console.log({ response });
         // this is a hack to force a reload of the dashboard
         history.push({
           pathname: `/dashboard`,
@@ -42,7 +44,7 @@ function DisplayReservations({ reservation }) {
 
   return (
     <div>
-      <div className="card">
+      <div className="card mr-1">
         <div className="card-body">
           <h5 className="card-title">
             {reservation.first_name} {reservation.last_name}
@@ -64,16 +66,27 @@ function DisplayReservations({ reservation }) {
           </p>
           {reservation_id || reservation.status === "seated" ? null : (
             <Link to={`/reservations/${reservation.reservation_id}/seat`}>
-              <button className="btn btn-primary">Seat</button>
+              <button
+                className="btn btn-primary mr-1"
+                disabled={reservation.status === "cancelled"}
+              >
+                Seat
+              </button>
             </Link>
           )}
           <a href={`/reservations/${reservation.reservation_id}/edit`}>
-            <button className="btn btn-primary">Edit</button>
+            <button
+              className="btn btn-primary mr-1"
+              disabled={reservation.status === "cancelled"}
+            >
+              Edit
+            </button>
           </a>
           <button
             data-reservation-id-cancel={reservation.reservation_id}
             className="btn btn-danger"
             onClick={() => handleCancel(reservation.reservation_id)}
+            disabled={reservation.status === "cancelled"}
           >
             Cancel
           </button>

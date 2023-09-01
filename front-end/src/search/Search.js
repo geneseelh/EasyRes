@@ -36,6 +36,7 @@ function Search({ search }) {
 
   return (
     <div className="search">
+      <h1>Search</h1>
       <form className="form-inline" onSubmit={handleSubmit}>
         <input
           className="form-control mr-sm-2"

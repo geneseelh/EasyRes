@@ -1,6 +1,7 @@
 import React from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+require("dotenv").config();
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
@@ -10,24 +11,19 @@ function DisplayTable({ table }) {
   // const location = useLocation();
   const history = useHistory();
 
+  // callback function for each finish button on each table
+  // takes in the table_id and reservation_id pulledd from the table object
   function finishHandler(table_id, reservationId) {
     async function updateTable(table_id, reservationId) {
       const abortController = new AbortController();
       const signal = abortController.signal;
       try {
-        const response = await axios.delete(
+        // originally assigned to response variable
+        await axios.delete(
           `${API_BASE_URL}/tables/${table_id}/seat`,
           { data: { reservation_id: reservationId } },
           { signal }
         );
-        // console.log({ response });
-        // const updateReservation = await axios.put(
-        //   `${API_BASE_URL}/reservations/${reservation_id}/status`,
-        //   { data: { status: "finished" } },
-        //   { signal }
-        // );
-        // console.log({ updateReservation });
-        // to force a reload of the dashboard
         history.push({
           pathname: `/dashboard`,
           state: { shouldReload: true },
@@ -47,7 +43,7 @@ function DisplayTable({ table }) {
 
   return (
     <div>
-      <div className="card">
+      <div className="card mr-1">
         <div className="card-body">
           <h5 className="card-title"> {table.table_name}</h5>
           <h6 className="card-subtitle mb-2 text-muted">
