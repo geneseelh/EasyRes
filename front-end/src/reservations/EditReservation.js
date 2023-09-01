@@ -72,14 +72,14 @@ function EditReservation() {
   function handleSubmitEdit(updatedReservation) {
     const abortController = new AbortController();
     const signal = abortController.signal;
-    const { reservation_id, ...updatedReservationNoId } = updatedReservation;
-    updatedReservationNoId.people = Number(updatedReservation.people);
-    updatedReservationNoId.reservation_id = null;
-    async function editReservation() {
+    const { reservation_id } = updatedReservation;
+
+    // console.log(updatedReservation);
+    async function editReservation(updatedReservation) {
       try {
         await axios.put(
           `${API_BASE_URL}/reservations/${reservation_id}`,
-          updatedReservationNoId,
+          { data: updatedReservation },
           { signal }
         );
         history.push(`/dashboard?date=${reservation.reservation_date}`);
@@ -87,7 +87,7 @@ function EditReservation() {
         console.log(error, "error editing reservation");
       }
     }
-    editReservation();
+    editReservation(updatedReservation);
     return () => abortController.abort();
   }
 

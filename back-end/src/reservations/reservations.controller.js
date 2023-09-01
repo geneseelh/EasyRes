@@ -93,7 +93,7 @@ function timeValidator(field) {
   return function (req, _res, next) {
     const { data: { [field]: value } = {} } = req.body;
     let submittedTime = value.replace(":", "");
-    const timeCheck = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+    const timeCheck = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
     if (!timeCheck.test(value)) {
       return next({
         status: 400,
@@ -259,14 +259,14 @@ module.exports = {
   ],
   updateReservation: [
     asyncErrorBoundary(reservationExists),
-    // ...[
-    //   "first_name",
-    //   "last_name",
-    //   "mobile_number",
-    //   "reservation_date",
-    //   "reservation_time",
-    //   "people",
-    // ].map(validator),
+    ...[
+      "first_name",
+      "last_name",
+      "mobile_number",
+      "reservation_date",
+      "reservation_time",
+      "people",
+    ].map(validator),
     isDate("reservation_date"),
     timeValidator("reservation_time"),
     peopleValidator("people"),
