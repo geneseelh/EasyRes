@@ -13,7 +13,11 @@ router
   .post(controller.create)
   .all(methodNotAllowed);
 
-router.route("/:reservation_id").get(controller.read).all(methodNotAllowed);
+router
+  .route("/:reservation_id")
+  .get(controller.read)
+  .put(controller.updateReservation)
+  .all(methodNotAllowed);
 
 router
   .route("/:reservation_id/status")

@@ -193,6 +193,31 @@ async function update(req, res) {
   res.status(200).json({ data: response[0] });
 }
 
+async function updateReservation(req, res) {
+  const {
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+  } = req.body.data;
+  const { reservation_id } = res.locals.reservation;
+  const updatedReservation = {
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+  };
+  const response = await service.updateReservation(
+    reservation_id,
+    updatedReservation
+  );
+  res.status(200).json({ data: response[0] });
+}
+
 module.exports = {
   list: [asyncErrorBoundary(list)],
   create: [
@@ -217,5 +242,17 @@ module.exports = {
     updateStatusIsNotFinished,
     updateStatusValidator("status"),
     asyncErrorBoundary(update),
+  ],
+  updateReservation: [
+    asyncErrorBoundary(reservationExists),
+    ...[
+      "first_name",
+      "last_name",
+      "mobile_number",
+      "reservation_date",
+      "reservation_time",
+      "people",
+    ].map(validator),
+    asyncErrorBoundary(updateReservation),
   ],
 };
