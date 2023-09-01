@@ -74,6 +74,8 @@ function EditReservation() {
     const signal = abortController.signal;
     const { reservation_id } = updatedReservation;
 
+    updatedReservation.people = Number(updatedReservation.people);
+
     // console.log(updatedReservation);
     async function editReservation(updatedReservation) {
       try {
