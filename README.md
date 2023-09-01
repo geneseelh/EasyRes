@@ -2,7 +2,6 @@
 
 ## About
 
-
 The Restaurant Reservation System is a full-stack web application that allows restaurant managers to create, read, update, and delete reservations. It provides a streamlined interface for managing reservations and tables, and it is built with a responsive design to ensure a seamless user experience across all devices. The Restaurant Reservation System is a project from the Thinkful Software Engineering Immersion program.
 
 ## Features
@@ -13,14 +12,20 @@ The Restaurant Reservation System is a full-stack web application that allows re
 4. **Reservation Status:** Visualize the status of reservations (booked, seated, finished) for efficient management.
 5. **Future Reservation Constraints:** Ensure reservations are made only on open days and during eligible hours.
 6. **User-friendly Interface:** Navigate and manage reservations with a sleek, responsive, and intuitive UI.
+
 ## Tech Stack
+
 - **Frontend:** React, JavaScript, Bootstrap
 - **Backend:** Node.js, Express.js, Knex
 - **Database:** PostgreSQL
+
 ## API Documentation
+
 #### `GET /api/reservations`
+
 **Description**: Fetches a list of all reservations.
 **Response**:
+
 ```json
 {
   "data": [
@@ -123,10 +128,16 @@ The Restaurant Reservation System is a full-stack web application that allows re
   ]
 }
 ```
-## Installation Instructions
-### Clone the Repository
-Clone and Fork the repository.
-### Install then Run
-Run npm install
 
-Run npm start
+## Installation Instructions
+
+### Clone the Repository
+
+Clone and Fork the repository.
+
+### Install with npm
+
+```bash
+  npm install
+  npm start
+```
