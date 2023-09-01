@@ -71,6 +71,7 @@ function DisplayReservations({ reservation }) {
             <button className="btn btn-primary">Edit</button>
           </a>
           <button
+            data-reservation-id-cancel={reservation.reservation_id}
             className="btn btn-danger"
             onClick={() => handleCancel(reservation.reservation_id)}
           >

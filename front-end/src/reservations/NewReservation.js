@@ -7,7 +7,7 @@ import ReservationForm from "./ReservationForm";
 // const API_BASE_URL =
 //   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
-function ReservationForm() {
+function NewReservation() {
   const history = useHistory();
   const initialState = {
     first_name: "",
@@ -213,4 +213,4 @@ function ReservationForm() {
   // </form>
 }
 
-export default ReservationForm;
+export default NewReservation;
