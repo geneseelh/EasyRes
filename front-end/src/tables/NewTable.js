@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { createTable } from "../utils/api";
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
 require("dotenv").config();
@@ -9,59 +10,39 @@ const API_BASE_URL =
 
 function NewTable() {
   const history = useHistory();
-  const [formData, setFormData] = useState({
+  const [tables, setTables] = useState([]);
+  const [error, setError] = useState(null);
+  const [capacityError, setCapacityError] = useState(false);
+  const [tableNameError, setTableNameError] = useState(false);
+  const [newTable, setNewTable] = useState({
     table_name: "",
     capacity: "",
   });
-  const [error, setError] = useState(null);
-  const [errorCapacity, setErrorCapacity] = useState(false);
-  const [errorTableName, setErrorTableName] = useState(false);
 
   function handleChange({ target }) {
-    const updatedFormData = {
-      ...formData,
+    const updatedNewTable = {
+      ...newTable,
       [target.name]: target.value,
     };
     if (target.name === "capacity") {
-      setErrorCapacity(updatedFormData.capacity < 1);
+      setCapacityError(updatedNewTable.capacity < 1);
     }
     if (target.name === "table_name") {
-      setErrorTableName(updatedFormData.table_name.length < 2);
+      setTableNameError(updatedNewTable.table_name.length < 2);
     }
-    setFormData(updatedFormData);
+    setNewTable(updatedNewTable);
   }
 
-  async function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const newErrors = [];
-    if (errorCapacity) {
-      newErrors.push({ message: "Capacity must be 1 or more." });
-    }
-    if (errorTableName) {
-      newErrors.push({ message: "Table name must be 2 or more characters." });
-    }
-    if (errorTableName || errorCapacity) {
-      setError({ message: newErrors });
-      return;
-    } else {
-      const abortController = new AbortController();
-      const signal = abortController.signal;
-      formData.capacity = Number(formData.capacity);
-      try {
-        await axios.post(
-          `${API_BASE_URL}/tables`,
-          { data: formData },
-          { signal }
-        );
-        history.push(`/dashboard`);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setError(error);
-        }
-      }
-      return () => abortController.abort();
-    }
-  }
+    newTable.capacity = Number(newTable.capacity);
+    createTable(newTable)
+      .then((updatedTable) => {
+        setTables([...tables, updatedTable]);
+      })
+      .then(() => history.push("/"))
+      .catch(setError);
+  };
 
   function handleCancel() {
     history.goBack();
@@ -69,36 +50,41 @@ function NewTable() {
 
   return (
     <div>
-      <h1>New Table</h1>
-      <form className="form-group" onSubmit={handleSubmit}>
-        <label htmlFor="table_name">Table Name:</label>
-        <input
-          className="form-control"
-          id="table_name"
-          type="text"
-          name="table_name"
-          onChange={handleChange}
-          value={formData.table_name}
-          required
-        />
-        <label htmlFor="capacity">Capacity:</label>
-        <input
-          className="form-control"
-          id="capacity"
-          type="number"
-          name="capacity"
-          onChange={handleChange}
-          value={formData.capacity}
-          required
-        />
-        <button className="btn btn-primary m-1" type="submit">
+      <h2>Create New Table</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="table_name">Table Name:</label>
+          <input
+            className="form-control"
+            type="string"
+            name="table_name"
+            onChange={handleChange}
+            value={newTable.table_name}
+            placeholder="#1"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="capacity">Capacity:</label>
+          <input
+            className="form-control"
+            id="capacity"
+            type="number"
+            name="capacity"
+            onChange={handleChange}
+            value={newTable.capacity}
+            placeholder="Party Size"
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
-        <button className="btn btn-danger m-1" onClick={handleCancel}>
+        <button className="btn btn-secondary m-1" onClick={handleCancel}>
           Cancel
         </button>
+        <ErrorAlert error={error} />
       </form>
-      <ErrorAlert error={error} />
     </div>
   );
 }

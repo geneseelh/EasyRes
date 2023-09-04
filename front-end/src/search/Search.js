@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-// import axios from "axios";
 import { listReservations } from "../utils/api";
 import ReservationsComponent from "../dashboard/ReservationsComponent";
-// import ErrorAlert from "../layout/ErrorAlert";
 // require("dotenv").config();
 
-// const API_BASE_URL =
-//   process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
 function Search() {
   const [searched, setSearched] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [formData, setFormData] = useState({});
-  // const [error, setError] = useState(null);
 
   function handleChange({ target }) {
     setFormData({
