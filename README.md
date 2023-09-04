@@ -5,7 +5,6 @@
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-<!-- PROJECT HEADER -->
 <div align="center">
 <h3 align="center">Restaurant Reservation</h3>
 
@@ -38,8 +37,6 @@
   </ol>
 </details>
 
-<!-- ABOUT THE PROJECT -->
-
 ## About The Project
 
 Restaurant Reservation is a full-stack application that allows restaurant managers to create and manage their customer reservations. It offers an efficient platform for overseeing reservations and table management for each day, utilizing a responsive design that ensures a user-friendly experience across various devices.
@@ -54,7 +51,6 @@ Restaurant Reservation is a full-stack application that allows restaurant manage
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- GETTING STARTED -->
 ## Getting Started
 
 ### Installation
@@ -63,36 +59,41 @@ Restaurant Reservation is a full-stack application that allows restaurant manage
    ```sh
    git clone https://github.com/geneseelh/restaurant-reservation.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    npm start
    ```
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+   <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- FEATURES EXAMPLES -->
 ## Features
 
-<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. -->
 **Dashboard:** View and manage customer reservations and table capacities by date.
+
 <!-- screenshot of dashboard -->
+
 ![dashboard](https://github.com/geneseelh/restaurant-reservation/assets/129642269/986531ea-febe-4f2e-b282-3e9dd2431103)
 
 **Create a New Reservation:** Input customer information to create a new reservation.
+
 <!-- screenshot of new reservation form -->
+
 ![new-reservation](https://github.com/geneseelh/restaurant-reservation/assets/129642269/e39effb8-2b2e-414c-846d-a4d3456ed6b6)
 
 **Create a New Table:** Input table information to create a new table name and capacity.
+
 <!-- screenshot of new table form -->
+
 ![create-table](https://github.com/geneseelh/restaurant-reservation/assets/129642269/906ffc2a-3198-462c-836a-b8a645abf263)
 
 **Search For a Customer Reservation:** Input a phone number of a specific customer to list all reservations of that customer.
+
 <!-- screenshot of search page -->
+
 ![search](https://github.com/geneseelh/restaurant-reservation/assets/129642269/096525a8-23c2-42e2-b0cd-47a669c920a5)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- API DOCUMENTATION -->
 ## API Documentation
 
 #### `GET /api/reservations`
@@ -165,7 +166,6 @@ Restaurant Reservation is a full-stack application that allows restaurant manage
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
 ## Contact
 
 Genesee Harmon - geneseelh@gmail.com
@@ -174,10 +174,8 @@ Project Link: [https://github.com/geneseelh/restaurant-reservation](https://gith
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [forks-shield]: https://img.shields.io/github/forks/geneseelh/restaurant-reservation.svg?style=for-the-badge
 [forks-url]: https://github.com/geneseelh/restaurant-reservation/forks
 [stars-shield]: https://img.shields.io/github/stars/geneseelh/restaurant-reservation.svg?style=for-the-badge
