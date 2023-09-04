@@ -10,3 +10,6 @@ exports.seed = function (knex) {
       ]);
     });
 };
+
+
+// fix error in seed file
