@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
-// import ListTables from "./ListTables";
 import { updateTable, listTables } from "../utils/api";
-// import axios from "axios";
-// import ReservationsComponent from "./ReservationsComponent";
 require("dotenv").config();
-
-// const API_BASE_URL =
-//   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 function SeatReservation() {
   const history = useHistory();
   const [tables, setTables] = useState([]); 
   const [tableId, setTableId] = useState(0);
-  // const [reservation, setReservation] = useState({});
  
   const [error, setError] = useState(null); 
 
@@ -29,20 +22,6 @@ function SeatReservation() {
       .catch(setError);
     return () => abortController.abort();
   }
-  // useEffect(() => {
-  //   async function loadTables() {
-  //     const abortController = new AbortController();
-  //     const signal = abortController.signal;
-  //     try {
-  //       const response = await axios.get(`${API_BASE_URL}/tables`, { signal });
-  //       setTables(response.data.data);
-  //     } catch (error) {
-  //       setError(error.response.data.error);
-  //       console.log(error, "error loading tables");
-  //     }
-  //   }
-  //   loadTables();
-  // }, []);
 
   const tablesForm = tables.map((table) => {
     return (
@@ -68,43 +47,6 @@ const submitHandler = (event) => {
   .catch(setError) ;
   }
 };
-
-  // // loads reservation on mount and when the reservation_id changes
-  // // should not be able to modify reservation and change reservation-id without going back to dashboard
-  // useEffect(() => {
-  //   async function loadReservation() {
-  //     const abortController = new AbortController();
-  //     const signal = abortController.signal;
-  //     try {
-  //       const response = await axios.get(
-  //         `${API_BASE_URL}/reservations/${reservation_id}`,
-  //         {
-  //           signal,
-  //         }
-  //       );
-  //       setReservation(response.data.data);
-  //     } catch (error) {
-  //       setError(error.response.data.error);
-  //       console.log(error, "error loading reservation");
-  //     }
-  //   }
-  //   loadReservation();
-  // }, [reservation_id]);
-
-  // function handleChange({ target }) {
-  //   setTableId(target.value);
-  // }
-
-  // // will update the table with reservation ID and the reservation status to be seated
-  // const handleSubmit = async (event) => {
-  //   await updateTable(reservation.reservation_id, tableId);
-  //   history.push("/dashboard");
-  // };
-
-  // // cancel does not fore re-render of dashboard because no changes can be made to reservation and still be on this page
-  // function handleCancel() {
-  //   history.goBack();
-  // }
 
   return (
     <div>

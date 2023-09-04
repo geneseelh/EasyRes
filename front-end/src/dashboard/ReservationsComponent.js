@@ -1,19 +1,9 @@
 import React from "react";
-// import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
-// import axios from "axios";
-// import { useHistory } from "react-router-dom";
-// import ErrorAlert from "../layout/ErrorAlert";
-// require("dotenv").config();
 
 import { updateResStatus } from "../utils/api"
 
-// const API_BASE_URL =
-//   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 export default function ReservationsComponent({ reservations, loadDashboard }) {
-  // const { reservation_id } = useParams();
-  // const history = useHistory();
-  // const [error, setError] = React.useState(null);
 
   function handleCancel(e, reservation) {
     e.preventDefault();
@@ -22,39 +12,6 @@ export default function ReservationsComponent({ reservations, loadDashboard }) {
       .then(() => loadDashboard())
     }
   }
-
-  // callback function for each cancel button on each reservation
-  // takes in the reservation_id pulled from the reservation object
-  // function handleCancel(reservation_id) {
-  //   async function cancelReservation(reservation_id) {
-  //     const abortController = new AbortController();
-  //     const signal = abortController.signal;
-  //     try {
-  //       // originally assigned to a variable named response
-  //       await axios.put(
-  //         `${API_BASE_URL}/reservations/${reservation_id}/status`,
-  //         { data: { status: "cancelled" } },
-  //         { signal }
-  //       );
-  //       // this is a hack to force a reload of the dashboard
-  //       history.push({
-  //         pathname: `/dashboard`,
-  //         state: { shouldReload: true },
-  //       });
-  //     } catch (error) {
-  //       setError(error.response.data.error);
-  //       console.log(error, "error cancelling reservation");
-  //     }
-  //   }
-
-  //   if (
-  //     window.confirm(
-  //       "Do you want to cancel this reservation? This cannot be undone."
-  //     )
-  //   ) {
-  //     cancelReservation(reservation_id);
-  //   }
-  // }
 
   let reservationsList = reservations.map((reservation) => {
     return (
@@ -87,4 +44,3 @@ export default function ReservationsComponent({ reservations, loadDashboard }) {
 
 return <div>{reservationsList}</div>
 }
-// export default ReservationsComponent;

@@ -22,7 +22,6 @@ function NewReservation() {
   const [errorPastDate, setErrorPastDate] = useState(false);
   const [errorTime, setErrorTime] = useState(false);
 
-  // change is updated from the child form component and additional validation is performed
   function handleChange(target) {
     const updatedFormData = {
       ...formData,
