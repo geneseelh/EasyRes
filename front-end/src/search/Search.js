@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import DisplayReservation from "../dashboard/DisplayReservation";
+import ReservationsComponent from "../dashboard/ReservationsComponent";
 import ErrorAlert from "../layout/ErrorAlert";
 require("dotenv").config();
 
@@ -59,7 +59,7 @@ function Search() {
       <div className="reservations">
         {reservations.length
           ? reservations.map((reservation) => (
-              <DisplayReservation
+              <ReservationsComponent
                 key={reservation.reservation_id}
                 reservation={reservation}
               />

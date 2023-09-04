@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   useParams,
   useHistory,
-} from "react-router-dom/cjs/react-router-dom.min";
+} from "react-router";
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
