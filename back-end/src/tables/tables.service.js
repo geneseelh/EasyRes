@@ -1,74 +1,48 @@
 const knex = require("../db/connection");
 
 function list() {
-  return knex("tables").select("*").orderBy("table_name");
+  return knex("tables").select("*");
+}
+
+function create(table) {
+  return knex("tables").insert(table).returning("*");
 }
 
 function read(table_id) {
-  return knex("tables").select("*").where({ table_id }).first();
+  return knex("tables").select("*").where({ table_id: table_id }).first();
 }
 
-async function create(table) {
-  const createdRecords = await knex("tables").insert(table).returning("*");
-  return createdRecords[0];
+function updateReservation(reservation_id, status) {
+  return knex("reservations")
+    .where({ reservation_id: reservation_id })
+    .update({ status: status });
 }
 
-async function update(table_id, reservation_id) {
-  return knex.transaction(async (trx) => {
-    try {
-      // Update the 'tables' table
-      const updatedTable = await trx("tables")
-        .where({ table_id })
-        .update({ reservation_id, occupied: true })
-        .returning("*");
-
-      // Update the 'reservations' table
-      await trx("reservations")
-        .where({ reservation_id })
-        .update({ status: "seated" });
-
-      // Commit the transaction
-      await trx.commit();
-
-      return updatedTable; // Return the updated table data if needed
-    } catch (error) {
-      // Rollback the transaction if an error occurs
-      await trx.rollback();
-      throw error; // Rethrow the error to handle it outside the transaction
-    }
-  });
+function readReservation(reservation_id) {
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_id: reservation_id })
+    .first();
 }
 
-async function destroy(table_id, reservation_id) {
-  return knex.transaction(async (trx) => {
-    try {
-      // Update the 'tables' table
-      const updatedTable = await trx("tables")
-        .where({ table_id })
-        .update({ reservation_id: null, occupied: false })
-        .returning("*");
+function occupy(table_id, reservation_id) {
+  return knex("tables")
+    .where({ table_id: table_id })
+    .update({ reservation_id: reservation_id, status: "occupied" });
+}
 
-      // Update the 'reservations' table
-      await trx("reservations")
-        .where({ reservation_id })
-        .update({ status: "finished" });
-
-      // Commit the transaction
-      await trx.commit();
-
-      return updatedTable; // Return the updated table data if needed
-    } catch (error) {
-      // Rollback the transaction if an error occurs
-      await trx.rollback();
-      throw error; // Rethrow the error to handle it outside the transaction
-    }
-  });
+function free(table_id) {
+  return knex("tables")
+    .where({ table_id: table_id })
+    .update({ reservation_id: null, status: "free" });
 }
 
 module.exports = {
   list,
-  read,
   create,
-  update,
-  destroy,
+  read,
+  readReservation,
+  updateReservation,
+  occupy,
+  free,
 };

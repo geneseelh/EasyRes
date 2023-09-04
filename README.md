@@ -186,16 +186,3 @@ Project Link: [https://github.com/geneseelh/restaurant-reservation](https://gith
 [issues-url]: https://github.com/geneseelh/restaurant-reservation/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/genesee-harmon
-<!-- [product-screenshot]: images/screenshot.png -->
-
-
-<!-- ## Restaurant Reservation System
-
-## Features
-
-1. **Flexible Reservation Handling:** Effortlessly generate, modify, and view reservations for well-organized day-to-day tracking.
-2. **Intuitive Table Management:** Allocate particular tables to reservations and monitor real-time table availability.
-3. **Search Capability:** Retrieve reservations instantly using mobile numbers.
-4. **Reservation Status:** Visualize the status of reservations (booked, seated, finished) for efficient management.
-5. **Future Reservation Constraints:** Ensure reservations are made only on open days and during eligible hours.
-6. **User-friendly Interface:** Navigate and manage reservations with efficient, responsive, and intuitive UI.
