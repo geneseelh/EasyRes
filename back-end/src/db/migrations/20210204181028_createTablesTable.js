@@ -7,8 +7,7 @@ exports.up = function (knex) {
     table
       .foreign("reservation_id")
       .references("reservation_id")
-      .inTable("reservations")
-      .onDelete("SET NULL");
+      .inTable("reservations");
     table.timestamps(true, true);
   });
 };
