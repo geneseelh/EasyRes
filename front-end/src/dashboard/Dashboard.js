@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, listTables } from "../utils/api";
+import { listReservations, listTables, updateResId } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationsComponent from "./ReservationsComponent";
 import ListTables from "../tables/ListTables";
@@ -17,30 +17,53 @@ require("dotenv").config();
  */
 
 function Dashboard() {
-  const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
-  const [tables, setTables] = useState([]);
   const query = useQuery();
   const date = query.get("date") || today();
+  const [reservations, setReservations] = useState([]);
+  const [reservationDate, setReservationDate] = useState(date);
+  const [reservationsError, setReservationsError] = useState(null);
+  const [tables, setTables] = useState([]);
+  
 
   const history = useHistory();
 
-  useEffect(loadDashboard, [date]);
+  useEffect(loadDashboard, [reservationDate]);
   function loadDashboard() {
+    console.log("LOAD DASHBOARD")
     const abortController = new AbortController();
     setReservationsError(null);
-    listReservations({ date }, abortController.signal)
+    listReservations({ date: reservationDate }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    listTables().then(setTables);
     return () => abortController.abort();
   }
 
-  useEffect(loadTables, []);
-  function loadTables() {
+  // useEffect(loadTables, []);
+  // function loadTables() {
+  //   const abortController = new AbortController();
+  //   listTables(abortController.signal).then(setTables);
+  //   console.log("dash tables", tables)
+  //   return () => abortController.abort();
+  // }
+
+  function onFinish(table_id, reservation_id){
+    console.log("onFinish", table_id);
     const abortController = new AbortController();
-    listTables(abortController.signal).then(setTables);
-    return () => abortController.abort();
+    updateResId(table_id, reservation_id).then(loadDashboard)
+    return () => abortController.abort()
   }
+
+  //  function clickHandler(event) {
+  //   let tableId = event.target.value;
+  //   tableId = Number(tableId);
+  //   if (window.confirm("Is this table ready to seat new guests?") === true) {
+  //     updateResId(tableId)
+  //       .then(() => loadTables())
+  //       .then(() => loadDashboard())
+  //       .catch((error) => console.log("error", error));
+  //   }
+  // }
 
   return (
     <main>
@@ -81,8 +104,9 @@ function Dashboard() {
       <h4 className="mt-4">Tables</h4>
       <ListTables
         tables={tables}
-        loadTables={loadTables}
-        loadDashboard={loadDashboard}
+        finishHandler={onFinish}
+        // loadTables={loadTables}
+        // loadDashboard={loadDashboard}
       />
       <ErrorAlert error={reservationsError} />
     </main>
