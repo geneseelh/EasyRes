@@ -78,6 +78,8 @@ function ReservationForm({
             id="reservation_date"
             name="reservation_date"
             type="date"
+            placeholder="YYYY-MM-DD"
+            pattern="\d{4}-\d{2}-\d{2}"
             onChange={handleChange}
             value={formData.reservation_date}
             required
@@ -88,6 +90,8 @@ function ReservationForm({
             id="reservation_time"
             name="reservation_time"
             type="time"
+            placeholder="HH:MM"
+            pattern="[0-9]{2}:[0-9]{2}"
             onChange={handleChange}
             value={formData.reservation_time}
             required

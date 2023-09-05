@@ -5,7 +5,6 @@ import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
 require("dotenv").config();
 
-
 function NewReservation() {
   const history = useHistory();
   const initialState = {
@@ -54,7 +53,23 @@ function NewReservation() {
         );
         const openingTime = new Date("01/01/2007 10:30:00");
         const closingTime = new Date("01/01/2007 21:30:00");
-        setErrorTime(parsedTime < openingTime || parsedTime > closingTime);
+        console.log("parsedTime", parsedTime);
+        console.log("openingTime", openingTime);
+        console.log("closingTime", closingTime);
+        console.log(
+          "parsedTime < openingTime",
+          parsedTime < openingTime ? parsedTime : openingTime
+        );
+        if (parsedTime < openingTime) {
+          console.log("LESS THAN");
+          setErrorTime(true);
+          console.log(errorTime);
+        }
+        if (parsedTime > closingTime) {
+          console.log("GREATER THAN");
+          setErrorTime(true);
+        }
+        // setErrorTime(parsedTime < openingTime || parsedTime > closingTime);
       }
     }
     setFormData(updatedFormData);
@@ -65,9 +80,10 @@ function NewReservation() {
     history.goBack();
   };
 
+  console.log("ERROR TIME", errorTime);
+
   // SUBMIT BUTTON HANDLER
   function handleSubmit(event) {
-
     const newErrors = [];
 
     if (errorTuesday) {
@@ -77,14 +93,18 @@ function NewReservation() {
       newErrors.push("Please select a future date.");
     }
     if (errorTime) {
+      console.log("ERROR TIME AGAIN", errorTime);
       newErrors.push("Please select a time between 10:30 AM and 9:30 PM.");
     }
+    // console.log("newErrors", newErrors);
     if (formData.people < 1) {
       newErrors.push("Please enter a number of people.");
-      if (errorTuesday || errorPastDate || errorTime || formData.people < 1) {
-        setError({ message: newErrors });
-        return;
-      }
+    }
+    if (errorTuesday || errorPastDate || errorTime || formData.people < 1) {
+      console.log("newErrors 2", newErrors);
+      setError({ message: newErrors });
+      return;
+      // }
     } else {
       const abortController = new AbortController();
       formData.people = Number(formData.people);
