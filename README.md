@@ -5,6 +5,8 @@
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+[The deployed application can be accessed here!](https://restaurant-reservation-geneseelh.onrender.com)
+
 <div align="center">
 <h3 align="center">Restaurant Reservation</h3>
 
