@@ -11,6 +11,7 @@ function SeatReservation() {
   const [error, setError] = useState(null);
   const [reservation, setReservation] = useState({});
   const { reservation_id } = useParams();
+  console.log(useParams())
 
   useEffect(loadTables, []);
   useEffect(loadReservations, [reservation_id]);
@@ -33,7 +34,7 @@ function SeatReservation() {
       <option
         key={table.table_id}
         value={table.table_id}
-        disabled={table.capacity < reservation.people || table.occupied}
+        disabled={table.capacity < reservation.people || table.reservation_id}
       >
         {table.table_name} - {table.capacity}
       </option>
@@ -53,12 +54,15 @@ function SeatReservation() {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    console.log("SUBMIT TRIGGERED!!!!")
+    console.log("tableID", tableId)
     if (tableId) {
-      // console.log("reservation_id", reservation_id);
+      console.log("reservation_id", reservation_id);
       console.log("TableID", tableId);
       updateTable(reservation_id, tableId)
         .then(() => history.push("/"))
-        .catch(setError);
+        // .catch(setError);
+        .catch(console.log);
     }
   };
 

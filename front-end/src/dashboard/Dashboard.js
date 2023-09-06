@@ -23,13 +23,12 @@ function Dashboard() {
   const [reservationDate, setReservationDate] = useState(date);
   const [reservationsError, setReservationsError] = useState(null);
   const [tables, setTables] = useState([]);
-  
 
   const history = useHistory();
 
   useEffect(loadDashboard, [reservationDate]);
   function loadDashboard() {
-    console.log("LOAD DASHBOARD")
+    console.log("LOAD DASHBOARD");
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date: reservationDate }, abortController.signal)
@@ -47,11 +46,13 @@ function Dashboard() {
   //   return () => abortController.abort();
   // }
 
-  function onFinish(table_id, reservation_id){
-    console.log("onFinish", table_id);
+  function onFinish(table_id, reservation_id) {
     const abortController = new AbortController();
-    updateResId(table_id, reservation_id).then(loadDashboard)
-    return () => abortController.abort()
+    if (
+      window.confirm("Is this table ready to seat new guests?") === true
+    ) {
+      updateResId(table_id, reservation_id).then(() => loadDashboard());
+    }
   }
 
   //  function clickHandler(event) {

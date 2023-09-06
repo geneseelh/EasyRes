@@ -13,16 +13,15 @@ export default function ListTables({ tables, finishHandler }) {
   //       .catch((error) => console.log("error", error));
   //   }
   // }
-  console.log("tables", tables);
+  // console.log("tables", tables);
   const list = tables.map((table) => {
-    console.log(table.occupied);
     return (
       <div className="card" key={table.table_id}>
         <div className="card-body">
           <h5 className="card-title">Table: {table.table_name}</h5>
           <p className="card-text">Capacity: {table.capacity}</p>
           <p data-table-id-status={table.table_id}>
-            &nbsp;/ &nbsp;{table.occupied ? "occupied" : "free"}
+            &nbsp;/ &nbsp;{table.reservation_id ? "occupied" : "free"}
           </p>
           {table.reservation_id ? (
             <button

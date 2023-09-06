@@ -6,6 +6,7 @@ function create(reservation) {
   return knex("reservations")
     .insert(reservation)
     .returning("*")
+    .then((data) => data[0]);
 }
 
 // read a reservation by id
