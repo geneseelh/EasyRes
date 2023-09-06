@@ -15,11 +15,11 @@ const reservationsService = require("../reservations/reservations.service");
 //     return next({ status: 400, message: "Required data attribute" });
 //   }
 
-  // VALID_TABLE_FIELDS.forEach((field) => {
-  //   if (!table[field]) {
-  //     return next({ status: 400, message: `Required property ${field}.` });
-  //   }
-  // });
+// VALID_TABLE_FIELDS.forEach((field) => {
+//   if (!table[field]) {
+//     return next({ status: 400, message: `Required property ${field}.` });
+//   }
+// });
 
 //   if (typeof table["capacity"] !== "number") {
 //     return next({
@@ -58,7 +58,7 @@ function isOccupied(req, res, next) {
 function bodyHasData(req, res, next) {
   const { data } = req.body;
   if (!data) {
-    next({ status: 400, message: "body" });
+    return next({ status: 400, message: "body" });
   }
   next();
 }
@@ -74,9 +74,11 @@ function hasCapacity(req, res, next) {
 
 function isValidCapacity(req, res, next) {
   const { capacity } = req.body.data;
-  if (capacity === 0 || !Number.isInteger(capacity)) {
-    next({ status: 400, message: "capacity" });
-  }
+  // console.log("capacity", capacity, Number.isInteger(capacity));
+  // if (capacity === 0 || !Number.isInteger(capacity)) {
+  if (capacity === 0 || typeof capacity !== "number") {
+    return next({ status: 400, message: "capacity" });
+  } 
   next();
 }
 
@@ -94,6 +96,7 @@ function isValidName(req, res, next) {
   if (!table_name || !table_name.length || table_name.length === 1) {
     return next({ status: 400, message: "table_name" });
   }
+  next();
 }
 
 function isTableLargeEnough(req, res, next) {
