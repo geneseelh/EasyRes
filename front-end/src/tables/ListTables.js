@@ -1,19 +1,7 @@
 import React from "react";
-import { updateResId } from "../utils/api";
 require("dotenv").config();
 
 export default function ListTables({ tables, finishHandler }) {
-  // function clickHandler(event) {
-  //   let tableId = event.target.value;
-  //   tableId = Number(tableId);
-  //   if (window.confirm("Is this table ready to seat new guests?") === true) {
-  //     updateResId(tableId)
-  //       .then(() => loadTables())
-  //       .then(() => loadDashboard())
-  //       .catch((error) => console.log("error", error));
-  //   }
-  // }
-  // console.log("tables", tables);
   const list = tables.map((table) => {
     return (
       <div className="card" key={table.table_id}>

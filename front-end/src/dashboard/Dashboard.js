@@ -28,7 +28,6 @@ function Dashboard() {
 
   useEffect(loadDashboard, [reservationDate]);
   function loadDashboard() {
-    console.log("LOAD DASHBOARD");
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date: reservationDate }, abortController.signal)
@@ -38,14 +37,6 @@ function Dashboard() {
     return () => abortController.abort();
   }
 
-  // useEffect(loadTables, []);
-  // function loadTables() {
-  //   const abortController = new AbortController();
-  //   listTables(abortController.signal).then(setTables);
-  //   console.log("dash tables", tables)
-  //   return () => abortController.abort();
-  // }
-
   function onFinish(table_id, reservation_id) {
     const abortController = new AbortController();
     if (
@@ -54,17 +45,6 @@ function Dashboard() {
       updateResId(table_id, reservation_id).then(() => loadDashboard());
     }
   }
-
-  //  function clickHandler(event) {
-  //   let tableId = event.target.value;
-  //   tableId = Number(tableId);
-  //   if (window.confirm("Is this table ready to seat new guests?") === true) {
-  //     updateResId(tableId)
-  //       .then(() => loadTables())
-  //       .then(() => loadDashboard())
-  //       .catch((error) => console.log("error", error));
-  //   }
-  // }
 
   return (
     <main>
@@ -106,8 +86,6 @@ function Dashboard() {
       <ListTables
         tables={tables}
         finishHandler={onFinish}
-        // loadTables={loadTables}
-        // loadDashboard={loadDashboard}
       />
       <ErrorAlert error={reservationsError} />
     </main>

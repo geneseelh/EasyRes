@@ -53,36 +53,21 @@ function NewReservation() {
         );
         const openingTime = new Date("01/01/2007 10:30:00");
         const closingTime = new Date("01/01/2007 21:30:00");
-        // console.log("parsedTime", parsedTime);
-        // console.log("openingTime", openingTime);
-        // console.log("closingTime", closingTime);
-        // console.log(
-        //   "parsedTime < openingTime",
-        //   parsedTime < openingTime ? parsedTime : openingTime
-        // );
         if (parsedTime < openingTime) {
-          // console.log("LESS THAN");
           setErrorTime(true);
-          // console.log(errorTime);
         }
         if (parsedTime > closingTime) {
-          // console.log("GREATER THAN");
           setErrorTime(true);
         }
-        // setErrorTime(parsedTime < openingTime || parsedTime > closingTime);
       }
     }
     setFormData(updatedFormData);
   }
 
-  // CANCEL BUTTON HANDLER
   const handleCancel = () => {
     history.goBack();
   };
 
-  // console.log("ERROR TIME", errorTime);
-
-  // SUBMIT BUTTON HANDLER
   function handleSubmit(event) {
     const newErrors = [];
 
@@ -93,15 +78,12 @@ function NewReservation() {
       newErrors.push("Please select a future date.");
     }
     if (errorTime) {
-      // console.log("ERROR TIME AGAIN", errorTime);
       newErrors.push("Please select a time between 10:30 AM and 9:30 PM.");
     }
-    // console.log("newErrors", newErrors);
     if (formData.people < 1) {
       newErrors.push("Please enter a number of people.");
     }
     if (errorTuesday || errorPastDate || errorTime || formData.people < 1) {
-      // console.log("newErrors 2", newErrors);
       setError({ message: newErrors });
       return;
     } else {

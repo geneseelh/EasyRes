@@ -1,7 +1,5 @@
 const knex = require("../db/connection");
 
-// create a new reservation
-
 function create(reservation) {
   return knex("reservations")
     .insert(reservation)
@@ -9,13 +7,9 @@ function create(reservation) {
     .then((data) => data[0]);
 }
 
-// read a reservation by id
-
 function read(reservation_id) {
   return knex("reservations").select("*").where({ reservation_id }).first();
 }
-
-// update a reservation's status by id
 
 async function update(reservation_id, status) {
   const updated = await knex("reservations")
@@ -26,8 +20,6 @@ async function update(reservation_id, status) {
   return updated[0];
 }
 
-// edit a reservation by id
-
 async function edit(reservation_id, reservation) {
   const updated = await knex("reservations")
     .select("*")
@@ -37,16 +29,12 @@ async function edit(reservation_id, reservation) {
   return updated[0];
 }
 
-// list all reservations
-
 async function list() {
   return knex("reservations")
     .select("*")
     .whereNotIn("status", ["finished", "cancelled"])
     .orderBy("reservations.reservation_date");
 }
-
-// list reservations by date
 
 function listByDate(reservation_date) {
   return knex("reservations")
@@ -56,16 +44,12 @@ function listByDate(reservation_date) {
     .orderBy("reservations.reservation_time");
 }
 
-// change a reservation's status to finished
-
 function finish(reservation_id) {
   return knex("reservations")
     .select("*")
     .where({ reservation_id })
     .update({ status: "finished" });
 }
-
-// search for a reservation by mobile number
 
 function search(mobile_number) {
   return knex("reservations")

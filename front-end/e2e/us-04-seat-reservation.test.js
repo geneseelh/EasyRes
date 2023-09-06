@@ -157,7 +157,6 @@ describe("US-04 - Seat reservation - E2E", () => {
         reservation_time: "13:45",
         people: 4,
       });
-      // console.log(reservation);
       page = await browser.newPage();
       page.on("console", onPageConsole);
       await page.setViewport({ width: 1920, height: 1080 });

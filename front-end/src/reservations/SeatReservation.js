@@ -11,7 +11,6 @@ function SeatReservation() {
   const [error, setError] = useState(null);
   const [reservation, setReservation] = useState({});
   const { reservation_id } = useParams();
-  console.log(useParams())
 
   useEffect(loadTables, []);
   useEffect(loadReservations, [reservation_id]);
@@ -41,27 +40,17 @@ function SeatReservation() {
     );
   });
 
-  // CHANGE HANDLER
-
   const onChange = (event) => {
     const { target } = event;
     const value = target.value;
     setTableId(value);
-    // console.log("line 38", value, [target.name], )
   };
-
-  // SUBMIT HANDLER
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log("SUBMIT TRIGGERED!!!!")
-    console.log("tableID", tableId)
     if (tableId) {
-      console.log("reservation_id", reservation_id);
-      console.log("TableID", tableId);
       updateTable(reservation_id, tableId)
         .then(() => history.push("/"))
-        // .catch(setError);
         .catch(console.log);
     }
   };

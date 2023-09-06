@@ -1,12 +1,5 @@
-/**
- * List handler for reservation resources
- */
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./reservations.service");
-
-// MIDDLEWARE
-
-// array of all the required valid fields for a reservation
 
 const _VALID_RESERVATION_FIELDS = [
   "first_name",
@@ -16,8 +9,6 @@ const _VALID_RESERVATION_FIELDS = [
   "reservation_time",
   "people",
 ];
-
-// validate that the reservation_time is in the correct format
 
 function validateTime(string) {
   const [hour, minute] = string.split(":");
@@ -33,8 +24,6 @@ function validateTime(string) {
   }
   return true;
 }
-
-// validate that a reservation has all the required fields
 
 function isValidReservation(req, res, next) {
   const reservation = req.body.data;
@@ -69,34 +58,25 @@ function isValidReservation(req, res, next) {
   next();
 }
 
-// validate the date is not on a Tuesday
-
 function isNotTuesday(req, res, next) {
   const { reservation_date } = req.body.data;
-  console.log("date", reservation_date);
   const [year, month, day] = reservation_date.split("-");
   const date = new Date(`${month}-${day}-${year}`);
   res.locals.date = date;
   if (date.getDay() === 2) {
-    // console.log("tuesday validation failed");
     return next({ status: 400, message: "Location is closed on Tuesdays." });
   }
   next();
 }
 
-// validate that the reservations are on a future date
-
 function isInFuture(req, res, next) {
   const date = res.locals.date;
   const today = new Date();
   if (date < today) {
-    // console.log("tuesday validation failed");
     return next({ status: 400, message: "Must be a future date." });
   }
   next();
 }
-
-// validate that the reservation exists
 
 const reservationExists = async (req, res, next) => {
   const { reservation_id } = req.params;
@@ -111,8 +91,6 @@ const reservationExists = async (req, res, next) => {
   res.locals.reservation = reservation;
   next();
 };
-
-// validate that the reservation time is being made within business hours
 
 function isWithinOpenHours(req, res, next) {
   const reservation = req.body.data;
@@ -135,8 +113,6 @@ function isWithinOpenHours(req, res, next) {
   next();
 }
 
-// validate if the reservation status is known
-
 function isValidStatus(req, res, next) {
   const VALID_STATUSES = ["booked", "seated", "finished", "cancelled"];
   const { status } = req.body.data;
@@ -145,8 +121,6 @@ function isValidStatus(req, res, next) {
   }
   next();
 }
-
-// validate if the reservation is showing a "booked" status
 
 function hasBookedStatus(req, res, next) {
   const { status } = res.locals.reservation
@@ -160,8 +134,6 @@ function hasBookedStatus(req, res, next) {
   next();
 }
 
-// validate if the reservation is "finished"
-
 function isFinishedReservation(req, res, next) {
   const { status } = res.locals.reservation;
   if (status === "finished") {
@@ -172,10 +144,6 @@ function isFinishedReservation(req, res, next) {
   }
   next();
 }
-
-// CRUD FUNCTIONS
-
-// list all the reservations
 
 async function list(req, res) {
   const { date, mobile_number } = req.query;
@@ -188,23 +156,17 @@ async function list(req, res) {
   res.json({ data: reservations });
 }
 
-// create a new reservation
 
 async function create(req, res) {
   const reservation = req.body.data;
   const createdReservation = await service.create(reservation);
-  // reservation.reservation_id = reservation_id;
   res.status(201).json({ data: createdReservation });
 }
-
-// read a reservation
 
 async function read(req, res) {
   const reservation = res.locals.reservation;
   res.json({ data: reservation });
 }
-
-// update a reservation
 
 async function update(req, res) {
   const { reservation_id } = req.params;
@@ -212,8 +174,6 @@ async function update(req, res) {
   const reservation = await service.update(reservation_id, status);
   res.json({ data: reservation });
 }
-
-// edit a reservation
 
 async function edit(req, res) {
   const { reservation_id } = req.params;

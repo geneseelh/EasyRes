@@ -14,7 +14,7 @@ const {
   DATABASE_URL_PREVIEW = "postgresql://postgres@localhost/postgres",
   DEBUG,
 } = process.env;
-console.log(DATABASE_URL_TEST);
+
 module.exports = {
   development: {
     client: "postgresql",
