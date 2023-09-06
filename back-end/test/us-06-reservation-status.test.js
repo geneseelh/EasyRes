@@ -217,7 +217,7 @@ describe("US-06 - Reservation status", () => {
         .put(`/tables/${tableOne.table_id}/seat`)
         .set("Accept", "application/json")
         .send({ data: { reservation_id: reservationOne.reservation_id } });
-
+console.log("seat response", seatResponse.body);
       expect(seatResponse.body.error).toBeUndefined();
       expect(seatResponse.status).toBe(200);
 
@@ -225,14 +225,14 @@ describe("US-06 - Reservation status", () => {
         .delete(`/tables/${tableOne.table_id}/seat`)
         .set("Accept", "application/json")
         .send({ data: { reservation_id: reservationOne.reservation_id } });
-
+console.log("finishResponse", finishResponse.body);
       expect(finishResponse.body.error).toBeUndefined();
       expect(finishResponse.status).toBe(200);
 
       const reservationResponse = await request(app)
         .get(`/reservations/${reservationOne.reservation_id}`)
         .set("Accept", "application/json");
-
+console.log("reservation response", reservationResponse.body);
       expect(reservationResponse.body.error).toBeUndefined();
       expect(reservationResponse.body.data).toHaveProperty(
         "status",

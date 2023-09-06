@@ -68,6 +68,7 @@ async function isValidCapacity(req, res, next) {
 // }
 
 async function tableExists(req, res, next) {
+  console.log("TABLE EXISTS")
   const { table_id } = req.params;
   const table = await tableService.read(Number(table_id));
   if (table) {
@@ -79,6 +80,7 @@ async function tableExists(req, res, next) {
 }
 
 function isOccupied(req, res, next) {
+  console.log("IS OCCUPIED")
   if (res.locals.table.reservation_id) return next();
   next({ status: 400, message: "Table is not occupied" });
 }
@@ -103,12 +105,15 @@ async function update(req, res, next) {
 }
 
 async function destroy(req, res, next) {
-  const { table_id } = req.params;
-  const reservation = await reservationService.finish(
-    res.locals.reservation_id
-  );
-  const table = await service.update(table_id, null);
-  res.json({ data: table });
+  console.log("DESTROY")
+  // const { table_id } = req.params;
+  // const reservation = await reservationService.finish(
+  //   res.locals.reservation_id
+  // );
+  // const table = await service.update(table_id, null);
+  // res.json({ data: table });
+  const data = await service.finish(res.locals.table);
+  res.json({ data });
 }
 
 module.exports = {
