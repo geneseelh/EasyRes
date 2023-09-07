@@ -59,7 +59,6 @@ function isValidReservation(req, res, next) {
 
     if (field === "mobile_number") {
       let results = reservation[field].match(/[\d]{3}-?[\d]{3}-?[\d]{4}/);
-      console.log("---", results, reservation[field]);
       if (!results || results.length > 1) {
         return next({
           status: 400,

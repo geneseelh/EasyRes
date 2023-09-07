@@ -52,7 +52,6 @@ function SeatReservation() {
       updateTable(reservation_id, tableId)
         .then(() => history.push("/"))
         .catch(setError);
-      // .catch(console.log);
     }
   };
 

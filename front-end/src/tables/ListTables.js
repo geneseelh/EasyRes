@@ -10,7 +10,7 @@ export default function ListTables({ tables, finishHandler }) {
           <h5 className="card-title">Table: {table.table_name}</h5>
           <p className="card-text">Capacity: {table.capacity}</p>
           <p data-table-id-status={table.table_id}>
-            &nbsp;/ &nbsp;{table.reservation_id ? "occupied" : "free"}
+            &nbsp;Status: &nbsp;{table.reservation_id ? "Occupied" : "Free"}
           </p>
           {table.reservation_id ? (
             <button
