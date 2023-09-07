@@ -3,7 +3,6 @@ const reservationService = require("../reservations/reservations.service");
 const tableService = require("../tables/tables.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
-
 function hasReservationId(req, res, next) {
   const table = req.body.data;
   if (!table) {

@@ -53,6 +53,16 @@ function isValidReservation(req, res, next) {
         return next({ status: 400, message: `${field} is not a valid time.` });
       }
     }
+
+    if (field === "mobile_number") {
+      let results = reservation[field].match(/[\d]{3}-?[\d]{3}-?[\d]{4}/);
+      if (!results || results.length > 1) {
+        return next({
+          status: 400,
+          message: `${field} is not a valid mobile number.`,
+        });
+      }
+    }
   });
 
   next();
@@ -124,7 +134,8 @@ function isValidStatus(req, res, next) {
 
 function hasBookedStatus(req, res, next) {
   const { status } = res.locals.reservation
-    ? res.locals.reservation : req.body.data;
+    ? res.locals.reservation
+    : req.body.data;
   if (status === "seated" || status === "finished" || status === "cancelled") {
     return next({
       status: 400,
@@ -155,7 +166,6 @@ async function list(req, res) {
   }
   res.json({ data: reservations });
 }
-
 
 async function create(req, res) {
   const reservation = req.body.data;
