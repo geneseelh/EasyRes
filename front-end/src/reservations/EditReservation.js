@@ -63,7 +63,6 @@ function EditReservation() {
         setIsLoaded(true);
       } catch (error) {
         setReservationsError(error.response.data.error);
-        console.log(error, "error loading reservation");
       }
     }
     loadReservation();
@@ -87,7 +86,6 @@ function EditReservation() {
         history.push(`/dashboard?date=${reservation.reservation_date}`);
       } catch (error) {
         setReservationsError(error.response.data.error);
-        console.log(error, "error editing reservation");
       }
     }
     editReservation(updatedReservation);

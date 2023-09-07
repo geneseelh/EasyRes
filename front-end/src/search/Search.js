@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { listReservations } from "../utils/api";
 import ReservationsComponent from "../dashboard/ReservationsComponent";
-// require("dotenv").config();
+require("dotenv").config();
 
 
 function Search() {
