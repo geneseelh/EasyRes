@@ -46,6 +46,7 @@ function NewReservation() {
     }
 
     if (target.name === "reservation_time") {
+      setErrorTime(false);
       const inputTimeParts = target.value.match(/^(\d{2}):(\d{2})$/);
       if (inputTimeParts) {
         const parsedTime = new Date(
@@ -94,7 +95,9 @@ function NewReservation() {
         .then(() => {
           history.push(`/dashboard?date=${formData.reservation_date}`);
         })
-        .catch(setError);
+        .catch((err) => {
+          setError(err);
+        });
       return () => abortController.abort();
     }
   }

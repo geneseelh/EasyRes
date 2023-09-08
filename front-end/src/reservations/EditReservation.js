@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  useParams,
-  useHistory,
-} from "react-router";
+import { useParams, useHistory } from "react-router";
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
@@ -85,7 +82,7 @@ function EditReservation() {
         );
         history.push(`/dashboard?date=${reservation.reservation_date}`);
       } catch (error) {
-        setReservationsError(error.response.data.error);
+        setReservationsError(error);
       }
     }
     editReservation(updatedReservation);
