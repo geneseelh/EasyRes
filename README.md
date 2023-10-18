@@ -41,7 +41,7 @@
 
 ## About The Project
 
-Restaurant Reservation is a full-stack application that allows restaurant managers to create and manage their customer reservations. It offers an efficient platform for overseeing reservations and table management for each day, utilizing a responsive design that ensures a user-friendly experience across various devices.
+EasyRes is a full-stack application that allows restaurant managers to create and manage their customer reservations. It offers an efficient platform for overseeing reservations and table management for each day, utilizing a responsive design that ensures a user-friendly experience across various devices.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -59,7 +59,7 @@ Restaurant Reservation is a full-stack application that allows restaurant manage
 
 1. Fork and Clone the repository
    ```sh
-   git clone https://github.com/geneseelh/restaurant-reservation.git
+   git clone https://github.com/geneseelh/EasyRes.git
    ```
 2. Install NPM packages
    ```sh
