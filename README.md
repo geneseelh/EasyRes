@@ -172,7 +172,7 @@ EasyRes is a full-stack application that allows restaurant managers to create an
 
 Genesee Harmon - geneseelh@gmail.com
 
-Project Link: [https://github.com/geneseelh/restaurant-reservation](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/geneseelh/EasyRes](https://github.com/github_username/repo_name)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
