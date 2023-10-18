@@ -8,7 +8,7 @@
 [The deployed application can be accessed here!](https://easyres.onrender.com)
 
 <div align="center">
-<h3 align="center">Restaurant Reservation</h3>
+<h3 align="center">EasyRes</h3>
 
   <p align="center">
     <a href="https://github.com/geneseelh/restaurant-reservation/issues">Report Bug</a>
